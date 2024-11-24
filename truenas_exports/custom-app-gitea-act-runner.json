@@ -1,0 +1,308 @@
+{
+  "catalog": "TRUECHARTS",
+  "catalog_train": "premium",
+  "chart_metadata": {
+    "annotations": {
+      "max_scale_version": "24.04.1",
+      "min_scale_version": "24.04.0",
+      "truecharts.org/SCALE-support": "true",
+      "truecharts.org/category": "custom",
+      "truecharts.org/max_helm_version": "3.14",
+      "truecharts.org/min_helm_version": "3.11",
+      "truecharts.org/train": "premium"
+    },
+    "apiVersion": "v2",
+    "appVersion": "0.21.1155",
+    "dependencies": [
+      {
+        "enabled": true,
+        "name": "common",
+        "repository": "oci://tccr.io/truecharts",
+        "version": "23.0.10"
+      }
+    ],
+    "description": "Advanced tool to create your own TrueCharts-based Charts",
+    "home": "https://truecharts.org/charts/premium/custom-app",
+    "icon": "https://truecharts.org/img/hotlink-ok/chart-icons/custom-app.webp",
+    "keywords": [
+      "custom"
+    ],
+    "kubeVersion": "\u003e=1.24.0-0",
+    "latest_chart_version": "13.0.8",
+    "maintainers": [
+      {
+        "email": "info@truecharts.org",
+        "name": "TrueCharts",
+        "url": "https://truecharts.org"
+      }
+    ],
+    "name": "custom-app",
+    "sources": [
+      "https://ghcr.io/linuxserver/jackett",
+      "https://github.com/truecharts/charts/tree/master/charts/premium/custom-app"
+    ],
+    "type": "application",
+    "version": "13.0.8"
+  },
+  "config": {
+    "TZ": "Europe/Madrid",
+    "addons": {
+      "codeserver": {
+        "enabled": false
+      },
+      "netshoot": {
+        "enabled": false
+      },
+      "vpn": {
+        "type": "disabled"
+      }
+    },
+    "cnpg": {
+      "main": {
+        "backups": {
+          "enabled": false,
+          "revision": ""
+        },
+        "cluster": {
+          "instances": 1,
+          "singleNode": true,
+          "storage": {
+            "size": "256Gi"
+          },
+          "walStorage": {
+            "size": "256Gi"
+          }
+        },
+        "enabled": false,
+        "hibernate": false,
+        "mode": "standalone",
+        "monitoring": {
+          "disableDefaultQueries": false,
+          "enablePodMonitor": true
+        },
+        "password": "PLACEHOLDERPASSWORD",
+        "pgVersion": 16,
+        "pooler": {
+          "enabled": false
+        },
+        "recovery": {
+          "enabled": false,
+          "revision": "",
+          "serverName": ""
+        }
+      }
+    },
+    "credentialsList": [],
+    "deviceList": [],
+    "docs": {
+      "confirmDocs": true
+    },
+    "donateNag": {
+      "confirmDonate": true
+    },
+    "global": {
+      "ixChartContext": {
+        "addNvidiaRuntimeClass": false,
+        "hasNFSCSI": true,
+        "hasSMBCSI": true,
+        "isInstall": false,
+        "isStopped": false,
+        "isUpdate": true,
+        "isUpgrade": false,
+        "kubernetes_config": {
+          "cluster_cidr": "172.16.0.0/16",
+          "cluster_dns_ip": "172.17.0.10",
+          "service_cidr": "172.17.0.0/16"
+        },
+        "nfsProvisioner": "nfs.csi.k8s.io",
+        "nvidiaRuntimeClassName": "nvidia",
+        "operation": "UPDATE",
+        "smbProvisioner": "smb.csi.k8s.io",
+        "storageClassName": "ix-storage-class-custom-app-gitea-act-runner",
+        "upgradeMetadata": {}
+      },
+      "stopAll": true
+    },
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "gitea/act_runner",
+      "tag": "latest-dind-rootless"
+    },
+    "imagePullSecretList": [],
+    "ingress": {
+      "main": {
+        "enabled": false
+      }
+    },
+    "ingressList": [],
+    "ixCertificateAuthorities": {},
+    "ixCertificates": {},
+    "ixChartContext": {
+      "addNvidiaRuntimeClass": false,
+      "hasNFSCSI": true,
+      "hasSMBCSI": true,
+      "isInstall": false,
+      "isStopped": false,
+      "isUpdate": true,
+      "isUpgrade": false,
+      "kubernetes_config": {
+        "cluster_cidr": "172.16.0.0/16",
+        "cluster_dns_ip": "172.17.0.10",
+        "service_cidr": "172.17.0.0/16"
+      },
+      "nfsProvisioner": "nfs.csi.k8s.io",
+      "nvidiaRuntimeClassName": "nvidia",
+      "operation": "UPDATE",
+      "smbProvisioner": "smb.csi.k8s.io",
+      "storageClassName": "ix-storage-class-custom-app-gitea-act-runner",
+      "upgradeMetadata": {}
+    },
+    "ixExternalInterfacesConfiguration": [],
+    "ixExternalInterfacesConfigurationNames": [],
+    "ixVolumes": [],
+    "networkPolicy": [],
+    "persistenceList": [
+      {
+        "enabled": true,
+        "mountPath": "/data",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "type": "pvc",
+        "volsync": [],
+        "volumeSnapshots": []
+      }
+    ],
+    "podOptions": {
+      "expertPodOpts": false
+    },
+    "portal": {
+      "open": {
+        "enabled": false
+      }
+    },
+    "release_name": "custom-app-gitea-act-runner",
+    "resources": {
+      "limits": {
+        "amd.com/gpu": 0,
+        "cpu": "4000m",
+        "gpu.intel.com/i915": 0,
+        "memory": "8Gi",
+        "nvidia.com/gpu": 0
+      },
+      "requests": {
+        "cpu": "10m",
+        "memory": "50Mi"
+      }
+    },
+    "scaleExternalInterface": [],
+    "securityContext": {
+      "container": {
+        "PUID": 568,
+        "UMASK": "0022",
+        "advanced": true,
+        "privileged": true,
+        "readOnlyRootFilesystem": false,
+        "runAsGroup": 0,
+        "runAsUser": 0
+      },
+      "pod": {
+        "fsGroup": 0,
+        "fsGroupChangePolicy": "OnRootMismatch",
+        "supplementalGroups": []
+      }
+    },
+    "service": {
+      "main": {
+        "enabled": true,
+        "ports": {
+          "main": {
+            "enabled": true,
+            "port": 3001,
+            "protocol": "http",
+            "targetPort": 3001
+          }
+        },
+        "portsList": [],
+        "type": "ClusterIP"
+      }
+    },
+    "serviceList": [],
+    "workload": {
+      "main": {
+        "podSpec": {
+          "containers": {
+            "main": {
+              "advanced": false,
+              "envList": [
+                {
+                  "name": "GITEA_INSTANCE_URL",
+                  "value": "https://gitea.uberelectronnetwork.cc"
+                },
+                {
+                  "name": "GITEA_RUNNER_REGISTRATION_TOKEN",
+                  "value": "5hcAIL79EFlrrwlkYfg1NxITbhNUYxhOPx621jKR"
+                },
+                {
+                  "name": "GITEA_RUNNER_NAME",
+                  "value": "UberRunner"
+                },
+                {
+                  "name": "GITEA_RUNNER_LABELS",
+                  "value": ""
+                }
+              ],
+              "extraArgs": [],
+              "probes": {
+                "liveness": {
+                  "enabled": false,
+                  "type": "tcp"
+                },
+                "readiness": {
+                  "enabled": false,
+                  "type": "tcp"
+                },
+                "startup": {
+                  "enabled": false,
+                  "type": "tcp"
+                }
+              }
+            }
+          }
+        },
+        "replicas": 1,
+        "type": "Deployment"
+      }
+    }
+  },
+  "container_images_update_available": true,
+  "dataset": "Contoso/ix-applications/releases/custom-app-gitea-act-runner",
+  "human_latest_version": "13.0.8",
+  "human_version": "0.21.1155_13.0.8",
+  "id": "custom-app-gitea-act-runner",
+  "info": {
+    "deleted": "",
+    "description": "Upgrade complete",
+    "first_deployed": "2024-05-19T14:08:35.365699986+02:00",
+    "last_deployed": "2024-11-24T21:26:36.875729468+01:00",
+    "notes": "\n# Thank you for installing custom-app by TrueCharts.\n\n\n## Sources for custom-app\n- https://ghcr.io/linuxserver/jackett\n- https://github.com/truecharts/charts/tree/master/charts/premium/custom-app\n\nSee more for **custom-app** at (https://truecharts.org/charts/premium/custom-app)\n\n## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://truecharts.org/sponsor\n",
+    "status": "deployed"
+  },
+  "name": "custom-app-gitea-act-runner",
+  "namespace": "ix-custom-app-gitea-act-runner",
+  "path": "/mnt/Contoso/ix-applications/releases/custom-app-gitea-act-runner",
+  "pod_status": {
+    "available": 0,
+    "desired": 0
+  },
+  "portals": {
+    "open": []
+  },
+  "status": "STOPPED",
+  "update_available": false,
+  "used_ports": [],
+  "version": 6
+}

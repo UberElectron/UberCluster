@@ -1,0 +1,502 @@
+{
+  "catalog": "TRUECHARTS",
+  "catalog_train": "stable",
+  "chart_metadata": {
+    "annotations": {
+      "truecharts.org/category": "GIT",
+      "truecharts.org/max_helm_version": "3.14",
+      "truecharts.org/min_helm_version": "3.11",
+      "truecharts.org/train": "stable"
+    },
+    "apiVersion": "v2",
+    "appVersion": "1.21.11",
+    "dependencies": [
+      {
+        "enabled": true,
+        "name": "common",
+        "repository": "oci://tccr.io/truecharts",
+        "version": "23.0.10"
+      },
+      {
+        "condition": "memcached.enabled",
+        "enabled": true,
+        "name": "memcached",
+        "repository": "oci://tccr.io/truecharts",
+        "version": "13.0.13"
+      }
+    ],
+    "description": "Self hosted GIT repositories",
+    "home": "https://truecharts.org/charts/stable/gitea",
+    "icon": "https://truecharts.org/img/hotlink-ok/chart-icons/gitea.webp",
+    "keywords": [
+      "git",
+      "issue tracker",
+      "code review",
+      "wiki",
+      "gitea",
+      "gogs"
+    ],
+    "kubeVersion": "\u003e=1.24.0-0",
+    "latest_chart_version": "19.1.11",
+    "maintainers": [
+      {
+        "email": "info@truecharts.org",
+        "name": "TrueCharts",
+        "url": "https://truecharts.org"
+      }
+    ],
+    "name": "gitea",
+    "sources": [
+      "https://gitea.com/gitea/helm-chart",
+      "https://github.com/go-gitea/gitea",
+      "https://github.com/truecharts/charts/tree/master/charts/stable/gitea",
+      "https://hub.docker.com/r/gitea/gitea"
+    ],
+    "type": "application",
+    "version": "19.1.11"
+  },
+  "config": {
+    "TZ": "Europe/Madrid",
+    "addons": {
+      "codeserver": {
+        "enabled": false
+      },
+      "netshoot": {
+        "enabled": false
+      },
+      "vpn": {
+        "type": "disabled"
+      }
+    },
+    "admin": {
+      "email": "${GITEA_ADMIN_EMAIL}",
+      "password": "${GITEA_ADMIN_PASS}",
+      "username": "${GITEA_ADMIN_USERNAME}"
+    },
+    "cnpg": {
+      "main": {
+        "backups": {
+          "credentials": "backblaze",
+          "enabled": true,
+          "retentionPolicy": "",
+          "revision": ""
+        },
+        "cluster": {
+          "instances": 2,
+          "singleNode": true,
+          "storage": {
+            "size": "256Gi"
+          },
+          "walStorage": {
+            "size": "256Gi"
+          }
+        },
+        "database": "gitea",
+        "enabled": true,
+        "hibernate": false,
+        "mode": "standalone",
+        "monitoring": {
+          "disableDefaultQueries": false,
+          "enablePodMonitor": true
+        },
+        "password": "PLACEHOLDERPASSWORD",
+        "pgVersion": 15,
+        "pooler": {
+          "enabled": false
+        },
+        "recovery": {
+          "enabled": false,
+          "revision": "",
+          "serverName": ""
+        },
+        "user": "gitea"
+      }
+    },
+    "config": {
+      "ALLOWED_HOST_LIST": "127.0.0.1",
+      "APP_NAME": "Gitea",
+      "RUN_MODE": "prod",
+      "nodeIP": "192.168.5.6"
+    },
+    "credentialsList": [
+      {
+        "accessKey": "volsync",
+        "bucket": "backup",
+        "encrKey": "BackupEncryptionPass",
+        "name": "minio",
+        "path": "",
+        "secretKey": "volsyncpassword",
+        "type": "s3",
+        "url": "https://uberelectronnetwork.cc:9001"
+      },
+      {
+        "accessKey": "${S3_BACKBLAZE_ACCESSKEY}",
+        "bucket": "${S3_BACKBLAZE_BUCKET}",
+        "encrKey": "${S3_BACKBLAZE_ENCRYPTKEY}",
+        "name": "backblaze",
+        "path": "",
+        "secretKey": "${S3_BACKBLAZE_SECRETKEY}",
+        "type": "s3",
+        "url": "${S3_BACKBLAZE_URL}"
+      }
+    ],
+    "customConfig": [
+      {
+        "keys": [
+          {
+            "name": "DISABLE_REGISTRATION",
+            "value": "true"
+          }
+        ],
+        "name": "service"
+      },
+      {
+        "keys": [
+          {
+            "name": "ENABLED",
+            "value": "true"
+          },
+          {
+            "name": "SMTP_ADDR",
+            "value": "${GITEA_MAILER_SMTP_ADDR}"
+          },
+          {
+            "name": "SMTP_PORT",
+            "value": "${GITEA_MAILER_SMTP_PORT}"
+          },
+          {
+            "name": "FROM",
+            "value": "${GITEA_MAILER_FROM}"
+          },
+          {
+            "name": "USER",
+            "value": "${GITEA_MAILER_USER}"
+          },
+          {
+            "name": "PASSWD",
+            "value": "${GITEA_MAILER_PASSWD}"
+          }
+        ],
+        "name": "mailer"
+      }
+    ],
+    "deviceList": [],
+    "docs": {
+      "confirmDocs": true
+    },
+    "donateNag": {
+      "confirmDonate": true
+    },
+    "global": {
+      "ixChartContext": {
+        "addNvidiaRuntimeClass": false,
+        "hasNFSCSI": true,
+        "hasSMBCSI": true,
+        "isInstall": false,
+        "isStopped": true,
+        "isUpdate": true,
+        "isUpgrade": false,
+        "kubernetes_config": {
+          "cluster_cidr": "172.16.0.0/16",
+          "cluster_dns_ip": "172.17.0.10",
+          "service_cidr": "172.17.0.0/16"
+        },
+        "nfsProvisioner": "nfs.csi.k8s.io",
+        "nvidiaRuntimeClassName": "nvidia",
+        "operation": "UPDATE",
+        "smbProvisioner": "smb.csi.k8s.io",
+        "storageClassName": "ix-storage-class-gitea",
+        "upgradeMetadata": {}
+      },
+      "stopAll": true
+    },
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "gitea/gitea",
+      "tag": "1.21.11-rootless@sha256:ff14c3531ed8615261e6e1db617efa1eb9a9c23d5b8fe7f2742c02b190837aea"
+    },
+    "imagePullSecretList": [],
+    "ingress": {
+      "main": {
+        "advanced": false,
+        "enabled": true,
+        "hosts": [
+          {
+            "host": "gitea.uberelectronnetwork.cc",
+            "paths": [
+              {
+                "path": "/",
+                "pathType": "Prefix"
+              }
+            ]
+          }
+        ],
+        "ingressClassName": "",
+        "integrations": {
+          "certManager": {
+            "certificateIssuer": "cloudflare-cert",
+            "enabled": true
+          },
+          "homepage": {
+            "enabled": false
+          },
+          "traefik": {
+            "allowCors": false,
+            "enabled": true,
+            "entrypoints": [
+              "websecure"
+            ],
+            "middlewares": []
+          }
+        },
+        "tls": []
+      }
+    },
+    "ingressList": [],
+    "ixCertificateAuthorities": {},
+    "ixCertificates": {},
+    "ixChartContext": {
+      "addNvidiaRuntimeClass": false,
+      "hasNFSCSI": true,
+      "hasSMBCSI": true,
+      "isInstall": false,
+      "isStopped": true,
+      "isUpdate": true,
+      "isUpgrade": false,
+      "kubernetes_config": {
+        "cluster_cidr": "172.16.0.0/16",
+        "cluster_dns_ip": "172.17.0.10",
+        "service_cidr": "172.17.0.0/16"
+      },
+      "nfsProvisioner": "nfs.csi.k8s.io",
+      "nvidiaRuntimeClassName": "nvidia",
+      "operation": "UPDATE",
+      "smbProvisioner": "smb.csi.k8s.io",
+      "storageClassName": "ix-storage-class-gitea",
+      "upgradeMetadata": {}
+    },
+    "ixExternalInterfacesConfiguration": [],
+    "ixExternalInterfacesConfigurationNames": [],
+    "ixVolumes": [],
+    "ldap": {
+      "enabled": false
+    },
+    "memcached": {
+      "enabled": true
+    },
+    "metrics": {
+      "main": {
+        "enabled": true,
+        "endpoints": [
+          {
+            "path": "/metrics",
+            "port": "main"
+          }
+        ],
+        "type": "servicemonitor"
+      }
+    },
+    "networkPolicy": [],
+    "oauth": {
+      "enabled": false
+    },
+    "persistence": {
+      "data": {
+        "enabled": true,
+        "mountPath": "/data",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "targetSelectAll": true,
+        "type": "pvc",
+        "volsync": [
+          {
+            "credentials": "minio",
+            "dest": {
+              "enabled": false
+            },
+            "name": "app",
+            "src": {
+              "enabled": true
+            },
+            "type": "restic"
+          }
+        ],
+        "volumeSnapshots": []
+      },
+      "varlib": {
+        "enabled": true,
+        "mountPath": "/var/lib/gitea",
+        "type": "emptyDir"
+      }
+    },
+    "persistenceList": [],
+    "podOptions": {
+      "expertPodOpts": false
+    },
+    "portal": {
+      "open": {
+        "enabled": true
+      }
+    },
+    "release_name": "gitea",
+    "resources": {
+      "limits": {
+        "amd.com/gpu": 0,
+        "cpu": "4000m",
+        "gpu.intel.com/i915": 0,
+        "memory": "8Gi",
+        "nvidia.com/gpu": 0
+      },
+      "requests": {
+        "cpu": "10m",
+        "memory": "50Mi"
+      }
+    },
+    "scaleExternalInterface": [],
+    "securityContext": {
+      "container": {
+        "UMASK": "0022",
+        "advanced": false,
+        "fsGroup": 1000,
+        "runAsGroup": 1000,
+        "runAsUser": 1000
+      },
+      "fsGroup": 1000,
+      "pod": {
+        "fsGroupChangePolicy": "OnRootMismatch",
+        "supplementalGroups": []
+      }
+    },
+    "service": {
+      "main": {
+        "enabled": true,
+        "ports": {
+          "main": {
+            "port": 10037,
+            "targetPort": 3000
+          }
+        },
+        "type": "ClusterIP"
+      },
+      "ssh": {
+        "enabled": true,
+        "loadBalancerIP": "",
+        "ports": {
+          "ssh": {
+            "enabled": true,
+            "port": 2222,
+            "targetPort": 2222
+          }
+        },
+        "type": "LoadBalancer"
+      }
+    },
+    "serviceList": [],
+    "signing": {
+      "enabled": true,
+      "gpgHome": "/data/git/.gnupg"
+    },
+    "workload": {
+      "main": {
+        "podSpec": {
+          "containers": {
+            "main": {
+              "advanced": false,
+              "envFrom": [
+                {
+                  "configMapRef": {
+                    "name": "gitea-env"
+                  }
+                }
+              ],
+              "envList": [],
+              "extraArgs": [],
+              "probes": {
+                "liveness": {
+                  "type": "tcp"
+                },
+                "readiness": {
+                  "type": "tcp"
+                },
+                "startup": {
+                  "type": "tcp"
+                }
+              }
+            }
+          },
+          "initContainers": {
+            "1-init-directories": {
+              "command": [
+                "/usr/sbin/init_directory_structure.sh"
+              ],
+              "enabled": true,
+              "envFrom": [
+                {
+                  "configMapRef": {
+                    "name": "gitea-env"
+                  }
+                }
+              ],
+              "imageSelector": "image",
+              "securityContext": {
+                "runAsNonRoot": false,
+                "runAsUser": 0
+              },
+              "type": "init"
+            },
+            "2-configure-gitea": {
+              "command": [
+                "/usr/sbin/configure_gitea.sh"
+              ],
+              "enabled": true,
+              "envFrom": [
+                {
+                  "configMapRef": {
+                    "name": "gitea-env"
+                  }
+                }
+              ],
+              "imageSelector": "image",
+              "type": "init"
+            }
+          }
+        },
+        "replicas": 1,
+        "type": "Deployment"
+      }
+    }
+  },
+  "container_images_update_available": false,
+  "dataset": "Contoso/ix-applications/releases/gitea",
+  "human_latest_version": "19.1.11",
+  "human_version": "1.21.11_19.1.11",
+  "id": "gitea",
+  "info": {
+    "deleted": "",
+    "description": "Upgrade complete",
+    "first_deployed": "2024-05-19T14:20:43.801938176+02:00",
+    "last_deployed": "2024-11-24T22:18:47.719023326+01:00",
+    "notes": "\n# Thank you for installing gitea by TrueCharts.\n\n\n## Connecting externally\nYou can use this Chart by opening one of the following links in your browser:\n- host: gitea.uberelectronnetwork.cc\npath: /\nport: \"443\"\nportalName: open\nprotocol: https\nurl: https://gitea.uberelectronnetwork.cc:443/\nuseNodeIP: false\n## Sources for gitea\n- https://gitea.com/gitea/helm-chart\n- https://github.com/go-gitea/gitea\n- https://github.com/truecharts/charts/tree/master/charts/stable/gitea\n- https://hub.docker.com/r/gitea/gitea\n\nSee more for **gitea** at (https://truecharts.org/charts/stable/gitea)\n\n## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://truecharts.org/sponsor\n",
+    "status": "deployed"
+  },
+  "name": "gitea",
+  "namespace": "ix-gitea",
+  "path": "/mnt/Contoso/ix-applications/releases/gitea",
+  "pod_status": {
+    "available": 0,
+    "desired": 0
+  },
+  "portals": {
+    "open": [
+      "https://gitea.uberelectronnetwork.cc:443/"
+    ]
+  },
+  "status": "STOPPED",
+  "update_available": false,
+  "used_ports": [],
+  "version": 22
+}

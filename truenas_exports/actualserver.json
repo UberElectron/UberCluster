@@ -1,0 +1,339 @@
+{
+  "catalog": "TRUECHARTS",
+  "catalog_train": "stable",
+  "chart_metadata": {
+    "annotations": {
+      "max_scale_version": "24.04.1",
+      "min_scale_version": "24.04.0",
+      "truecharts.org/SCALE-support": "true",
+      "truecharts.org/category": "finance",
+      "truecharts.org/max_helm_version": "3.14",
+      "truecharts.org/min_helm_version": "3.11",
+      "truecharts.org/train": "stable"
+    },
+    "apiVersion": "v2",
+    "appVersion": "24.5.0",
+    "dependencies": [
+      {
+        "enabled": true,
+        "name": "common",
+        "repository": "oci://tccr.io/truecharts",
+        "version": "23.0.10"
+      }
+    ],
+    "description": "Actual is a super fast privacy-focused app for managing your finances.",
+    "home": "https://truecharts.org/charts/stable/actualserver",
+    "icon": "https://truecharts.org/img/hotlink-ok/chart-icons/actualserver.webp",
+    "keywords": [
+      "actualserver",
+      "finance"
+    ],
+    "kubeVersion": "\u003e=1.24.0-0",
+    "latest_chart_version": "11.1.4",
+    "maintainers": [
+      {
+        "email": "info@truecharts.org",
+        "name": "TrueCharts",
+        "url": "https://truecharts.org"
+      }
+    ],
+    "name": "actualserver",
+    "sources": [
+      "https://ghcr.io/actualbudget/actual-server",
+      "https://github.com/Kippenhof/docker-templates",
+      "https://github.com/truecharts/charts/tree/master/charts/stable/actualserver"
+    ],
+    "type": "application",
+    "version": "11.1.4"
+  },
+  "config": {
+    "TZ": "Europe/Madrid",
+    "addons": {
+      "codeserver": {
+        "enabled": false
+      },
+      "netshoot": {
+        "enabled": false
+      },
+      "vpn": {
+        "type": "disabled"
+      }
+    },
+    "credentialsList": [
+      {
+        "accessKey": "volsync",
+        "bucket": "backup",
+        "encrKey": "BackupEncryptionPass",
+        "name": "minio",
+        "path": "",
+        "secretKey": "volsyncpassword",
+        "type": "s3",
+        "url": "https://uberelectronnetwork.cc:9001"
+      }
+    ],
+    "deviceList": [],
+    "docs": {
+      "confirmDocs": true
+    },
+    "donateNag": {
+      "confirmDonate": true
+    },
+    "global": {
+      "ixChartContext": {
+        "addNvidiaRuntimeClass": false,
+        "hasNFSCSI": true,
+        "hasSMBCSI": true,
+        "isInstall": false,
+        "isStopped": false,
+        "isUpdate": true,
+        "isUpgrade": false,
+        "kubernetes_config": {
+          "cluster_cidr": "172.16.0.0/16",
+          "cluster_dns_ip": "172.17.0.10",
+          "service_cidr": "172.17.0.0/16"
+        },
+        "nfsProvisioner": "nfs.csi.k8s.io",
+        "nvidiaRuntimeClassName": "nvidia",
+        "operation": "UPDATE",
+        "smbProvisioner": "smb.csi.k8s.io",
+        "storageClassName": "ix-storage-class-actualserver",
+        "upgradeMetadata": {}
+      },
+      "stopAll": true
+    },
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "ghcr.io/actualbudget/actual-server",
+      "tag": "24.5.0@sha256:48374b8f097e0e65b254b5a9cd6ff03566d6e6200ec12a5c3f54e75694c83c11"
+    },
+    "imagePullSecretList": [],
+    "ingress": {
+      "main": {
+        "advanced": false,
+        "enabled": true,
+        "hosts": [
+          {
+            "host": "actual.uberelectronnetwork.cc",
+            "paths": [
+              {
+                "path": "/",
+                "pathType": "Prefix"
+              }
+            ]
+          }
+        ],
+        "ingressClassName": "",
+        "integrations": {
+          "certManager": {
+            "certificateIssuer": "cloudflare-cert",
+            "enabled": true
+          },
+          "homepage": {
+            "enabled": false
+          },
+          "traefik": {
+            "allowCors": false,
+            "enabled": true,
+            "entrypoints": [
+              "websecure"
+            ],
+            "middlewares": []
+          }
+        },
+        "tls": []
+      }
+    },
+    "ingressList": [],
+    "ixCertificateAuthorities": {},
+    "ixCertificates": {},
+    "ixChartContext": {
+      "addNvidiaRuntimeClass": false,
+      "hasNFSCSI": true,
+      "hasSMBCSI": true,
+      "isInstall": false,
+      "isStopped": false,
+      "isUpdate": true,
+      "isUpgrade": false,
+      "kubernetes_config": {
+        "cluster_cidr": "172.16.0.0/16",
+        "cluster_dns_ip": "172.17.0.10",
+        "service_cidr": "172.17.0.0/16"
+      },
+      "nfsProvisioner": "nfs.csi.k8s.io",
+      "nvidiaRuntimeClassName": "nvidia",
+      "operation": "UPDATE",
+      "smbProvisioner": "smb.csi.k8s.io",
+      "storageClassName": "ix-storage-class-actualserver",
+      "upgradeMetadata": {}
+    },
+    "ixExternalInterfacesConfiguration": [],
+    "ixExternalInterfacesConfigurationNames": [],
+    "ixVolumes": [],
+    "networkPolicy": [],
+    "persistence": {
+      "server-files": {
+        "enabled": true,
+        "mountPath": "/data/server-files",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "type": "pvc",
+        "volsync": [
+          {
+            "credentials": "minio",
+            "dest": {
+              "enabled": false
+            },
+            "name": "server-files",
+            "src": {
+              "enabled": true
+            },
+            "type": "restic"
+          }
+        ],
+        "volumeSnapshots": []
+      },
+      "user-files": {
+        "enabled": true,
+        "mountPath": "/data/user-files",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "type": "pvc",
+        "volsync": [
+          {
+            "credentials": "minio",
+            "dest": {
+              "enabled": false
+            },
+            "name": "user-files2",
+            "src": {
+              "enabled": true
+            },
+            "type": "restic"
+          }
+        ],
+        "volumeSnapshots": []
+      }
+    },
+    "persistenceList": [],
+    "podOptions": {
+      "expertPodOpts": false
+    },
+    "portal": {
+      "open": {
+        "enabled": true
+      }
+    },
+    "release_name": "actualserver",
+    "resources": {
+      "limits": {
+        "amd.com/gpu": 0,
+        "cpu": "4000m",
+        "gpu.intel.com/i915": 0,
+        "memory": "8Gi",
+        "nvidia.com/gpu": 0
+      },
+      "requests": {
+        "cpu": "10m",
+        "memory": "50Mi"
+      }
+    },
+    "scaleExternalInterface": [],
+    "securityContext": {
+      "container": {
+        "PUID": 568,
+        "UMASK": "0022",
+        "advanced": false,
+        "readOnlyRootFilesystem": false,
+        "runAsGroup": 0,
+        "runAsNonRoot": false,
+        "runAsUser": 0
+      },
+      "pod": {
+        "fsGroup": 568,
+        "fsGroupChangePolicy": "OnRootMismatch",
+        "supplementalGroups": []
+      }
+    },
+    "service": {
+      "main": {
+        "enabled": true,
+        "ports": {
+          "main": {
+            "port": 5006,
+            "protocol": "http",
+            "targetPort": 5006
+          }
+        },
+        "type": "ClusterIP"
+      }
+    },
+    "serviceList": [],
+    "workload": {
+      "main": {
+        "podSpec": {
+          "containers": {
+            "main": {
+              "advanced": false,
+              "env": {},
+              "envList": [],
+              "extraArgs": [],
+              "probes": {
+                "liveness": {
+                  "path": "/",
+                  "type": "http"
+                },
+                "readiness": {
+                  "path": "/",
+                  "type": "http"
+                },
+                "startup": {
+                  "path": "/",
+                  "type": "http"
+                }
+              }
+            }
+          }
+        },
+        "replicas": 1,
+        "type": "Deployment"
+      }
+    }
+  },
+  "container_images_update_available": false,
+  "dataset": "Contoso/ix-applications/releases/actualserver",
+  "human_latest_version": "11.1.4",
+  "human_version": "24.5.0_11.1.4",
+  "id": "actualserver",
+  "info": {
+    "deleted": "",
+    "description": "Upgrade complete",
+    "first_deployed": "2024-05-25T15:27:04.635521426+02:00",
+    "last_deployed": "2024-11-24T21:17:54.338054005+01:00",
+    "notes": "\n# Thank you for installing actualserver by TrueCharts.\n\n\n## Connecting externally\nYou can use this Chart by opening one of the following links in your browser:\n- host: actual.uberelectronnetwork.cc\npath: /\nport: \"443\"\nportalName: open\nprotocol: https\nurl: https://actual.uberelectronnetwork.cc:443/\nuseNodeIP: false\n## Sources for actualserver\n- https://ghcr.io/actualbudget/actual-server\n- https://github.com/Kippenhof/docker-templates\n- https://github.com/truecharts/charts/tree/master/charts/stable/actualserver\n\nSee more for **actualserver** at (https://truecharts.org/charts/stable/actualserver)\n\n## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://truecharts.org/sponsor\n",
+    "status": "deployed"
+  },
+  "name": "actualserver",
+  "namespace": "ix-actualserver",
+  "path": "/mnt/Contoso/ix-applications/releases/actualserver",
+  "pod_status": {
+    "available": 0,
+    "desired": 0
+  },
+  "portals": {
+    "open": [
+      "https://actual.uberelectronnetwork.cc:443/"
+    ]
+  },
+  "status": "STOPPED",
+  "update_available": false,
+  "used_ports": [],
+  "version": 10
+}

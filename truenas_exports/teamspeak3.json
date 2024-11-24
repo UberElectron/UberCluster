@@ -1,0 +1,350 @@
+{
+  "catalog": "TRUECHARTS",
+  "catalog_train": "stable",
+  "chart_metadata": {
+    "annotations": {
+      "max_scale_version": "24.04.1",
+      "min_scale_version": "24.04.0",
+      "truecharts.org/SCALE-support": "true",
+      "truecharts.org/category": "voice",
+      "truecharts.org/max_helm_version": "3.14",
+      "truecharts.org/min_helm_version": "3.11",
+      "truecharts.org/train": "stable"
+    },
+    "apiVersion": "v2",
+    "appVersion": "3.13.7",
+    "dependencies": [
+      {
+        "enabled": true,
+        "name": "common",
+        "repository": "oci://tccr.io/truecharts",
+        "version": "23.0.10"
+      }
+    ],
+    "description": "TeamSpeak is software for quality voice communication via the Internet.",
+    "home": "https://truecharts.org/charts/stable/teamspeak3",
+    "icon": "https://truecharts.org/img/hotlink-ok/chart-icons/teamspeak3.webp",
+    "keywords": [
+      "voice server",
+      "teamspeak",
+      "teamspeak3",
+      "teamspeak server"
+    ],
+    "kubeVersion": "\u003e=1.24.0-0",
+    "latest_chart_version": "11.0.8",
+    "maintainers": [
+      {
+        "email": "info@truecharts.org",
+        "name": "TrueCharts",
+        "url": "https://truecharts.org"
+      }
+    ],
+    "name": "teamspeak3",
+    "sources": [
+      "https://github.com/truecharts/charts/tree/master/charts/stable/teamspeak3",
+      "https://hub.docker.com/_/teamspeak",
+      "https://www.teamspeak.com/en/"
+    ],
+    "type": "application",
+    "version": "11.0.8"
+  },
+  "config": {
+    "TZ": "Europe/Madrid",
+    "addons": {
+      "codeserver": {
+        "enabled": false
+      },
+      "netshoot": {
+        "enabled": false
+      },
+      "vpn": {
+        "type": "disabled"
+      }
+    },
+    "credentialsList": [
+      {
+        "accessKey": "volsync",
+        "bucket": "backup",
+        "encrKey": "BackupEncryptionPass",
+        "name": "minio",
+        "path": "",
+        "secretKey": "volsyncpassword",
+        "type": "s3",
+        "url": "https://uberelectronnetwork.cc:9001"
+      }
+    ],
+    "deviceList": [],
+    "docs": {
+      "confirmDocs": true
+    },
+    "donateNag": {
+      "confirmDonate": true
+    },
+    "global": {
+      "ixChartContext": {
+        "addNvidiaRuntimeClass": false,
+        "hasNFSCSI": true,
+        "hasSMBCSI": true,
+        "isInstall": false,
+        "isStopped": false,
+        "isUpdate": true,
+        "isUpgrade": false,
+        "kubernetes_config": {
+          "cluster_cidr": "172.16.0.0/16",
+          "cluster_dns_ip": "172.17.0.10",
+          "service_cidr": "172.17.0.0/16"
+        },
+        "nfsProvisioner": "nfs.csi.k8s.io",
+        "nvidiaRuntimeClassName": "nvidia",
+        "operation": "UPDATE",
+        "smbProvisioner": "smb.csi.k8s.io",
+        "storageClassName": "ix-storage-class-teamspeak3",
+        "upgradeMetadata": {}
+      },
+      "stopAll": false
+    },
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "teamspeak",
+      "tag": "3.13.7@sha256:b5bdec55bc87b992c5658e739f3ce465644efa6d997633110b12be3dc3a10796"
+    },
+    "imagePullSecretList": [],
+    "ixCertificateAuthorities": {},
+    "ixCertificates": {},
+    "ixChartContext": {
+      "addNvidiaRuntimeClass": false,
+      "hasNFSCSI": true,
+      "hasSMBCSI": true,
+      "isInstall": false,
+      "isStopped": false,
+      "isUpdate": true,
+      "isUpgrade": false,
+      "kubernetes_config": {
+        "cluster_cidr": "172.16.0.0/16",
+        "cluster_dns_ip": "172.17.0.10",
+        "service_cidr": "172.17.0.0/16"
+      },
+      "nfsProvisioner": "nfs.csi.k8s.io",
+      "nvidiaRuntimeClassName": "nvidia",
+      "operation": "UPDATE",
+      "smbProvisioner": "smb.csi.k8s.io",
+      "storageClassName": "ix-storage-class-teamspeak3",
+      "upgradeMetadata": {}
+    },
+    "ixExternalInterfacesConfiguration": [],
+    "ixExternalInterfacesConfigurationNames": [],
+    "ixVolumes": [],
+    "networkPolicy": [],
+    "persistence": {
+      "config": {
+        "enabled": true,
+        "mountPath": "/var/run/ts3server",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "type": "pvc",
+        "volsync": [
+          {
+            "credentials": "minio",
+            "dest": {
+              "enabled": false
+            },
+            "name": "config",
+            "src": {
+              "enabled": true
+            },
+            "type": "restic"
+          }
+        ],
+        "volumeSnapshots": []
+      },
+      "data": {
+        "enabled": true,
+        "mountPath": "/var/ts3server",
+        "readOnly": false,
+        "size": "256Gi",
+        "static": {
+          "mode": "disabled"
+        },
+        "storageClass": "",
+        "type": "pvc",
+        "volsync": [
+          {
+            "credentials": "minio",
+            "dest": {
+              "enabled": false
+            },
+            "name": "app",
+            "src": {
+              "enabled": true
+            },
+            "type": "restic"
+          }
+        ],
+        "volumeSnapshots": []
+      }
+    },
+    "persistenceList": [],
+    "podOptions": {
+      "expertPodOpts": false
+    },
+    "portal": {
+      "open": {
+        "enabled": false
+      }
+    },
+    "release_name": "teamspeak3",
+    "resources": {
+      "limits": {
+        "amd.com/gpu": 0,
+        "cpu": "4000m",
+        "gpu.intel.com/i915": 0,
+        "memory": "8Gi",
+        "nvidia.com/gpu": 0
+      },
+      "requests": {
+        "cpu": "10m",
+        "memory": "50Mi"
+      }
+    },
+    "scaleExternalInterface": [],
+    "securityContext": {
+      "container": {
+        "UMASK": "0022",
+        "advanced": false,
+        "readOnlyRootFilesystem": false,
+        "runAsGroup": 568,
+        "runAsUser": 568
+      },
+      "pod": {
+        "fsGroup": 568,
+        "fsGroupChangePolicy": "OnRootMismatch",
+        "supplementalGroups": []
+      }
+    },
+    "service": {
+      "files": {
+        "enabled": true,
+        "loadBalancerIP": "",
+        "ports": {
+          "files": {
+            "enabled": true,
+            "port": 30033,
+            "targetPort": 30033
+          }
+        },
+        "type": "LoadBalancer"
+      },
+      "main": {
+        "enabled": true,
+        "loadBalancerIP": "",
+        "ports": {
+          "main": {
+            "port": 10011,
+            "targetPort": 10011
+          }
+        },
+        "type": "LoadBalancer"
+      },
+      "query": {
+        "enabled": true,
+        "loadBalancerIP": "",
+        "ports": {
+          "query": {
+            "enabled": true,
+            "port": 10022,
+            "targetPort": 10022
+          }
+        },
+        "type": "LoadBalancer"
+      },
+      "voice": {
+        "enabled": true,
+        "loadBalancerIP": "",
+        "ports": {
+          "voice": {
+            "enabled": true,
+            "port": 9987,
+            "protocol": "udp",
+            "targetPort": 9987
+          }
+        },
+        "type": "LoadBalancer"
+      }
+    },
+    "serviceList": [],
+    "workload": {
+      "main": {
+        "podSpec": {
+          "containers": {
+            "main": {
+              "advanced": false,
+              "env": {
+                "TS3SERVER_LICENSE": "accept"
+              },
+              "envList": [],
+              "extraArgs": [],
+              "probes": {
+                "liveness": {
+                  "type": "tcp"
+                },
+                "readiness": {
+                  "type": "tcp"
+                },
+                "startup": {
+                  "type": "tcp"
+                }
+              }
+            }
+          }
+        },
+        "replicas": 1,
+        "type": "Deployment"
+      }
+    }
+  },
+  "container_images_update_available": false,
+  "dataset": "Contoso/ix-applications/releases/teamspeak3",
+  "human_latest_version": "11.0.8",
+  "human_version": "3.13.7_11.0.8",
+  "id": "teamspeak3",
+  "info": {
+    "deleted": "",
+    "description": "Upgrade complete",
+    "first_deployed": "2024-05-19T12:58:18.881798511+02:00",
+    "last_deployed": "2024-10-31T21:52:00.020455128+01:00",
+    "status": "deployed"
+  },
+  "name": "teamspeak3",
+  "namespace": "ix-teamspeak3",
+  "path": "/mnt/Contoso/ix-applications/releases/teamspeak3",
+  "pod_status": {
+    "available": 1,
+    "desired": 1
+  },
+  "portals": {},
+  "status": "ACTIVE",
+  "update_available": false,
+  "used_ports": [
+    {
+      "port": 30033,
+      "protocol": "TCP"
+    },
+    {
+      "port": 10011,
+      "protocol": "TCP"
+    },
+    {
+      "port": 10022,
+      "protocol": "TCP"
+    },
+    {
+      "port": 9987,
+      "protocol": "UDP"
+    }
+  ],
+  "version": 9
+}
