@@ -1,0 +1,223 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: gitea
+    namespace: gitea
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: gitea
+            version: 19.1.11
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: gitea
+    values:
+        TZ: Europe/Madrid
+        addons:
+            codeserver:
+                enabled: false
+            netshoot:
+                enabled: false
+            vpn:
+                type: disabled
+        admin:
+            email: ${GITEA_ADMIN_EMAIL}
+            password: ${GITEA_ADMIN_PASS}
+            username: ${GITEA_ADMIN_USERNAME}
+        cnpg:
+            main:
+                backups:
+                    credentials: backblaze
+                    enabled: true
+                    retentionPolicy: ""
+                    revision: ""
+                cluster:
+                    instances: 2
+                    singleNode: true
+                database: gitea
+                enabled: true
+                hibernate: false
+                mode: standalone
+                monitoring:
+                    disableDefaultQueries: false
+                    enablePodMonitor: true
+                password: PLACEHOLDERPASSWORD
+                pgVersion: 15
+                pooler:
+                    enabled: false
+                recovery:
+                    enabled: true
+                    backupName: ""
+                    credentials: backblaze
+                    method: ""
+                    revision: ""
+                    serverName: ""
+                user: gitea
+        config:
+            ALLOWED_HOST_LIST: 127.0.0.1
+            APP_NAME: Gitea
+            RUN_MODE: prod
+            nodeIP: ${VIP}
+        credentials:
+            backblaze:
+                accessKey: ${S3_BACKBLAZE_ACCESSKEY}
+                bucket: ${S3_BACKBLAZE_BUCKET}
+                encrKey: ${S3_BACKBLAZE_ENCRYPTKEY}
+                name: backblaze
+                path: ""
+                secretKey: ${S3_BACKBLAZE_SECRETKEY}
+                type: s3
+                url: ${S3_BACKBLAZE_URL}
+            minio:
+                accessKey: ${S3_PVC_ACCESSKEY}
+                bucket: backup
+                encrKey: ${S3_PVC_ENCRYPTKEY}
+                name: minio
+                path: ""
+                secretKey: ${S3_PVC_SECRETKEY}
+                type: s3
+                url: ${S3_PVC_URL}
+        customConfig:
+            - keys:
+                - name: DISABLE_REGISTRATION
+                  value: "true"
+              name: service
+            - keys:
+                - name: ENABLED
+                  value: "true"
+                - name: SMTP_ADDR
+                  value: ${GITEA_MAILER_SMTP_ADDR}
+                - name: SMTP_PORT
+                  value: ${GITEA_MAILER_SMTP_PORT}
+                - name: FROM
+                  value: ${GITEA_MAILER_FROM}
+                - name: USER
+                  value: ${GITEA_MAILER_USER}
+                - name: PASSWD
+                  value: ${GITEA_MAILER_PASSWD}
+              name: mailer
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: gitea.uberelectronnetwork.cc
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                ingressClassName: ""
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare-cert
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        ldap:
+            enabled: false
+        memcached:
+            enabled: true
+        metrics:
+            main:
+                enabled: true
+                endpoints:
+                    - path: /metrics
+                      port: main
+                type: servicemonitor
+        oauth:
+            enabled: false
+        persistence:
+            data:
+                enabled: true
+                mountPath: /data
+                readOnly: false
+                storageClass: ""
+                targetSelectAll: true
+                volsync:
+                    - credentials: minio
+                      dest:
+                        enabled: false
+                      name: app
+                      src:
+                        enabled: true
+                      type: restic
+            varlib:
+                enabled: true
+                mountPath: /var/lib/gitea
+                type: emptyDir
+        release_name: gitea
+        resources: {}
+        securityContext:
+            container:
+                UMASK: "0022"
+                fsGroup: 1000
+                runAsGroup: 1000
+                runAsUser: 1000
+            fsGroup: 1000
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
+        service:
+            main:
+                enabled: true
+                ports:
+                    main:
+                        port: 10037
+                        targetPort: 3000
+                type: ClusterIP
+            ssh:
+                enabled: true
+                loadBalancerIP: ""
+                ports:
+                    ssh:
+                        enabled: true
+                        port: 2222
+                        targetPort: 2222
+                type: LoadBalancer
+        signing:
+            enabled: true
+            gpgHome: /data/git/.gnupg
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            envFrom:
+                                - configMapRef:
+                                    name: gitea-env
+                            probes:
+                                liveness:
+                                    type: tcp
+                                readiness:
+                                    type: tcp
+                                startup:
+                                    type: tcp
+                    initContainers:
+                        1-init-directories:
+                            command:
+                                - /usr/sbin/init_directory_structure.sh
+                            enabled: true
+                            envFrom:
+                                - configMapRef:
+                                    name: gitea-env
+                            imageSelector: image
+                            securityContext:
+                                runAsNonRoot: false
+                                runAsUser: 0
+                            type: init
+                        2-configure-gitea:
+                            command:
+                                - /usr/sbin/configure_gitea.sh
+                            enabled: true
+                            envFrom:
+                                - configMapRef:
+                                    name: gitea-env
+                            imageSelector: image
+                            type: init
+                replicas: 1
+                type: Deployment

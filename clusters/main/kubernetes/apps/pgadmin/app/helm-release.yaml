@@ -1,0 +1,97 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: pgadmin
+    namespace: pgadmin
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: pgadmin
+            version: 16.1.4
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: pgadmin
+    values:
+        TZ: Europe/Madrid
+        addons:
+            codeserver:
+                enabled: false
+            netshoot:
+                enabled: false
+            vpn:
+                type: disabled
+        credentials:
+            minio:
+                accessKey: ${S3_PVC_ACCESSKEY}
+                bucket: backup
+                encrKey: ${S3_PVC_ENCRYPTKEY}
+                name: minio
+                path: ""
+                secretKey: ${S3_PVC_SECRETKEY}
+                type: s3
+                url: ${S3_PVC_URL}
+        ingress:
+            main:
+                enabled: false
+        persistence:
+            config:
+                enabled: true
+                mountPath: /var/lib/pgadmin
+                readOnly: false
+                storageClass: ""
+                volsync:
+                    - credentials: minio
+                      dest:
+                        enabled: false
+                      name: config
+                      src:
+                        enabled: true
+                      type: restic
+        release_name: pgadmin
+        resources: {}
+        securityContext:
+            container:
+                UMASK: "0022"
+                fsGroup: 5050
+                readOnlyRootFilesystem: false
+                runAsGroup: 5050
+                runAsNonRoot: true
+                runAsUser: 5050
+            pod:
+                fsGroup: 5050
+                fsGroupChangePolicy: OnRootMismatch
+        service:
+            main:
+                enabled: true
+                loadBalancerIP: ""
+                ports:
+                    main:
+                        port: 10024
+                        targetPort: 80
+                type: LoadBalancer
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                PGADMIN_DEFAULT_EMAIL: ${PGADMIN_ADMIN_EMAIL}
+                                PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_ADMIN_PASSWORD}
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    path: /misc/ping
+                                    type: http
+                                readiness:
+                                    enabled: true
+                                    path: /misc/ping
+                                    type: http
+                                startup:
+                                    enabled: true
+                                    path: /misc/ping
+                                    type: http
+                replicas: 1
+                type: Deployment
