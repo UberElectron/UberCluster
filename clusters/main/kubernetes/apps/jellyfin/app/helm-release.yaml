@@ -14,6 +14,17 @@ spec:
                 name: truecharts
                 namespace: flux-system
     releaseName: jellyfin
+    maxHistory: 3
+    install:
+        createNamespace: true
+        remediation:
+            retries: 3
+    upgrade:
+        cleanupOnFail: true
+        remediation:
+            retries: 3
+    uninstall:
+        keepHistory: false
     values:
         TZ: Europe/Madrid
         addons:
@@ -44,16 +55,10 @@ spec:
                 enabled: true
                 hosts:
                     - host: jelly.uberelectronnetwork.cc
-                      paths:
-                        - path: /
-                          pathType: Prefix
-                ingressClassName: ""
                 integrations:
                     certManager:
                         certificateIssuer: cloudflare-cert
                         enabled: true
-                    homepage:
-                        enabled: false
                     traefik:
                         allowCors: false
                         enabled: true
@@ -70,13 +75,13 @@ spec:
                 readOnly: false
                 storageClass: ""
                 volsync:
-                    - credentials: minio
+                    - name: app 
+                      type: restic
+                      credentials: minio
                       dest:
-                        enabled: false
-                      name: app
+                        enabled: true
                       src:
                         enabled: true
-                      type: restic
             transcode:
                 autoPermissions:
                     enabled: false

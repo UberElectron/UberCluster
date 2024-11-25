@@ -14,15 +14,19 @@ spec:
                 name: truecharts
                 namespace: flux-system
     releaseName: actualserver
+    maxHistory: 3
+    install:
+        createNamespace: true
+        remediation:
+            retries: 3
+    upgrade:
+        cleanupOnFail: true
+        remediation:
+            retries: 3
+    uninstall:
+        keepHistory: false
     values:
         TZ: Europe/Madrid
-        addons:
-            codeserver:
-                enabled: false
-            netshoot:
-                enabled: false
-            vpn:
-                type: disabled
         credentials:
             minio:
                 accessKey: ${S3_PVC_ACCESSKEY}
@@ -38,16 +42,10 @@ spec:
                 enabled: true
                 hosts:
                     - host: actual.uberelectronnetwork.cc
-                      paths:
-                        - path: /
-                          pathType: Prefix
-                ingressClassName: ""
                 integrations:
                     certManager:
                         certificateIssuer: cloudflare-cert
                         enabled: true
-                    homepage:
-                        enabled: false
                     traefik:
                         allowCors: false
                         enabled: true
@@ -60,26 +58,26 @@ spec:
                 readOnly: false
                 storageClass: ""
                 volsync:
-                    - credentials: minio
+                    - name: server-files 
+                      type: restic
+                      credentials: minio
                       dest:
-                        enabled: false
-                      name: server-files
+                        enabled: true
                       src:
                         enabled: true
-                      type: restic
             user-files:
                 enabled: true
                 mountPath: /data/user-files
                 readOnly: false
                 storageClass: ""
                 volsync:
-                    - credentials: minio
+                    - name: user-files2 
+                      type: restic
+                      credentials: minio
                       dest:
-                        enabled: false
-                      name: user-files2
+                        enabled: true
                       src:
                         enabled: true
-                      type: restic
         release_name: actualserver
         resources: {}
         securityContext:
