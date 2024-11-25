@@ -66,6 +66,12 @@ spec:
       # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console only
       type: ""
 
+    customDNS:
+      customTTL: 1h
+      filterUnmappedTypes: true
+      mapping:
+        - domain: ${S3_PVC_URL}
+          dnsserver: 192.168.5.6
     configmap:
       dashboard:
         enabled: false
