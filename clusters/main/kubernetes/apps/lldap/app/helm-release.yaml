@@ -31,7 +31,7 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: 1
+                    revision: "1"
                     credentials: backblaze
                 recovery:
                     enabled: true
