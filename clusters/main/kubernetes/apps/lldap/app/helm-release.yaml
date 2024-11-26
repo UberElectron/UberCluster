@@ -31,10 +31,11 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: ""
+                    revision: "1"
                     credentials: backblaze
                 recovery:
                     enabled: true
+                    revision: ""
                     credentials: backblaze
                     method: object_store
                 cluster:
