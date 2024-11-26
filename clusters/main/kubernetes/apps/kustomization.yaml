@@ -9,4 +9,3 @@ resources:
   - nextcloud/ks.yaml
   - pgadmin/ks.yaml
   - teamspeak3/ks.yaml
-  - lldap2/ks.yaml
