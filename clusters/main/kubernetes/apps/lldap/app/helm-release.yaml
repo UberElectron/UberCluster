@@ -44,7 +44,7 @@ spec:
                 database: lldap
                 enabled: true
                 hibernate: false
-                mode: standalone
+                mode: recovery
                 monitoring:
                     disableDefaultQueries: false
                     enablePodMonitor: true
