@@ -104,23 +104,23 @@ spec:
             pullPolicy: IfNotPresent
             repository: tccr.io/tccr/nextcloud-imaginary
             tag: v20230401@sha256:3ee40a5bcea3266612070df7243704b35db77948494f4725595f1eb41270e266
-        ingress:
-            main:
-                enabled: true
-                hosts:
-                    - host: nextcloud.uberelectronnetwork.cc
-                      paths: []
-                      # Paths added for error on "nextcloud.ingressInjector" fixed on https://github.com/truecharts/public/pull/25447
-                integrations:
-                    certManager:
-                        certificateIssuer: cloudflare-cert
-                        enabled: true
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
-                required: true
+        # ingress:
+        #     main:
+        #         enabled: true
+        #         hosts:
+        #             - host: nextcloud.uberelectronnetwork.cc
+        #               paths: []
+        #               # Paths added for error on "nextcloud.ingressInjector" fixed on https://github.com/truecharts/public/pull/25447
+        #         integrations:
+        #             certManager:
+        #                 certificateIssuer: cloudflare-cert
+        #                 enabled: true
+        #             traefik:
+        #                 allowCors: false
+        #                 enabled: true
+        #                 entrypoints:
+        #                     - websecure
+        #         required: true
         metrics:
             main:
                 enabled: false
