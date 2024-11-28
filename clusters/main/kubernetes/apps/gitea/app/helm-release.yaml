@@ -35,10 +35,11 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: "1"
+                    revision: "3"
                     credentials: backblaze
                 recovery:
                     enabled: true
+                    revision: "2"
                     credentials: backblaze
                     method: object_store
                 cluster:
@@ -47,7 +48,7 @@ spec:
                 database: gitea
                 enabled: true
                 hibernate: false
-                mode: standalone
+                mode: recovery
                 monitoring:
                     disableDefaultQueries: false
                     enablePodMonitor: true
