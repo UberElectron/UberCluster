@@ -108,6 +108,8 @@ spec:
                 enabled: true
                 hosts:
                     - host: nextcloud.uberelectronnetwork.cc
+                      paths: []
+                      # Paths added for error on "nextcloud.ingressInjector" fixed on https://github.com/truecharts/public/pull/25447
                 integrations:
                     certManager:
                         certificateIssuer: cloudflare-cert
