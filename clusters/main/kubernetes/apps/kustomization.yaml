@@ -6,6 +6,6 @@ resources:
   - gitea/ks.yaml
   - jellyfin/ks.yaml
   - lldap/ks.yaml
-  - nextcloud/ks.yaml
+  #- nextcloud/ks.yaml
   - pgadmin/ks.yaml
   - teamspeak3/ks.yaml
