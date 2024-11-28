@@ -43,52 +43,65 @@ spec:
                 mountPath: /var/run/ts3server
                 readOnly: false
                 volsync:
-                    - name: config 
+                    - name: config
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                          enabled: true
                       src:
-                        enabled: true
+                          enabled: true
             data:
                 enabled: true
                 mountPath: /var/ts3server
                 readOnly: false
                 volsync:
-                    - name: app 
+                    - name: app
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                          enabled: true
                       src:
-                        enabled: true
+                          enabled: true
         securityContext:
             container:
                 readOnlyRootFilesystem: false
         service:
+            files:
+                enabled: true
+                loadBalancerIP: ${TS3_IP}
+                ports:
+                    files:
+                        enabled: true
+                        port: 30033
+                        targetPort: 30033
+                type: LoadBalancer
             main:
                 enabled: true
                 loadBalancerIP: ${TS3_IP}
-                type: "LoadBalancer"
                 ports:
                     main:
-                        primary: true
-                        enabled: true
                         port: 10011
                         targetPort: 10011
+                type: LoadBalancer
+            query:
+                enabled: true
+                loadBalancerIP: ${TS3_IP}
+                ports:
                     query:
                         enabled: true
                         port: 10022
                         targetPort: 10022
+                type: LoadBalancer
+            voice:
+                enabled: true
+                loadBalancerIP: ${TS3_IP}
+                ports:
                     voice:
                         enabled: true
                         port: 9987
                         protocol: udp
                         targetPort: 9987
-                    files:
-                        enabled: true
-                        port: 30033
-                        targetPort: 30033
+                type: LoadBalancer
         workload:
             main:
                 podSpec:
