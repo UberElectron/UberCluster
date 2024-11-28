@@ -27,13 +27,6 @@ spec:
         keepHistory: false
     values:
         TZ: Europe/Madrid
-        addons:
-            codeserver:
-                enabled: false
-            netshoot:
-                enabled: false
-            vpn:
-                type: disabled
         credentials:
             minio:
                 accessKey: ${S3_PVC_ACCESSKEY}
