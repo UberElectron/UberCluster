@@ -38,5 +38,6 @@ spec:
     service:
       main:
         type: LoadBalancer
+        loadBalancerIP: ${TRAEFIK_IP}
       tcp:
         loadBalancerIP: ${TRAEFIK_IP}
