@@ -14,6 +14,7 @@ spec:
                 name: truecharts
                 namespace: flux-system
     releaseName: gitea
+    timeout: 15m
     maxHistory: 3
     install:
         createNamespace: true
