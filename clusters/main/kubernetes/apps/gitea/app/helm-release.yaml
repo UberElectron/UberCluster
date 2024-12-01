@@ -84,23 +84,27 @@ spec:
                 url: ${S3_PVC_URL}
         customConfig:
             - keys:
-                - name: DISABLE_REGISTRATION
-                  value: "true"
+                  - name: DISABLE_REGISTRATION
+                    value: "true"
               name: service
             - keys:
-                - name: ENABLED
-                  value: "true"
-                - name: SMTP_ADDR
-                  value: ${GITEA_MAILER_SMTP_ADDR}
-                - name: SMTP_PORT
-                  value: ${GITEA_MAILER_SMTP_PORT}
-                - name: FROM
-                  value: ${GITEA_MAILER_FROM}
-                - name: USER
-                  value: ${GITEA_MAILER_USER}
-                - name: PASSWD
-                  value: ${GITEA_MAILER_PASSWD}
+                  - name: ENABLED
+                    value: "true"
+                  - name: SMTP_ADDR
+                    value: ${GITEA_MAILER_SMTP_ADDR}
+                  - name: SMTP_PORT
+                    value: ${GITEA_MAILER_SMTP_PORT}
+                  - name: FROM
+                    value: ${GITEA_MAILER_FROM}
+                  - name: USER
+                    value: ${GITEA_MAILER_USER}
+                  - name: PASSWD
+                    value: ${GITEA_MAILER_PASSWD}
               name: mailer
+            - keys:
+                  - name: SSH_DOMAIN
+                    value: "giteassh.uberelectronnetwork.cc"
+              name: server
         ingress:
             main:
                 enabled: true
@@ -136,13 +140,13 @@ spec:
                 storageClass: ""
                 targetSelectAll: true
                 volsync:
-                    - name: app 
+                    - name: app
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                          enabled: true
                       src:
-                        enabled: true
+                          enabled: true
             varlib:
                 enabled: true
                 mountPath: /var/lib/gitea
@@ -168,7 +172,7 @@ spec:
                 type: ClusterIP
             ssh:
                 enabled: true
-                loadBalancerIP: ""
+                loadBalancerIP: ${GITEA_SSH_IP}
                 ports:
                     ssh:
                         enabled: true
@@ -185,7 +189,7 @@ spec:
                         main:
                             envFrom:
                                 - configMapRef:
-                                    name: gitea-env
+                                      name: gitea-env
                             probes:
                                 liveness:
                                     type: tcp
@@ -200,7 +204,7 @@ spec:
                             enabled: true
                             envFrom:
                                 - configMapRef:
-                                    name: gitea-env
+                                      name: gitea-env
                             imageSelector: image
                             securityContext:
                                 runAsNonRoot: false
@@ -212,7 +216,7 @@ spec:
                             enabled: true
                             envFrom:
                                 - configMapRef:
-                                    name: gitea-env
+                                      name: gitea-env
                             imageSelector: image
                             type: init
                 replicas: 1
