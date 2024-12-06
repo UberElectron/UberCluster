@@ -9,3 +9,4 @@ resources:
   - nextcloud/ks.yaml
   - pgadmin/ks.yaml
   - teamspeak3/ks.yaml
+  - mongo

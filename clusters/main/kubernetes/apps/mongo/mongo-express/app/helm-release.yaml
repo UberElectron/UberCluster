@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: mongo-express
+    namespace: mongodb
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: mongo-express
+            version: 8.5.5
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: mongo-express
+    maxHistory: 3
+    install:
+        createNamespace: true
+        remediation:
+            retries: 3
+    upgrade:
+        cleanupOnFail: true
+        remediation:
+            retries: 3
+    uninstall:
+        keepHistory: false
+    values:
+        TZ: Europe/Madrid
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: mongoexpress.uberelectronnetwork.cc
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare-cert
+                        enabled: true
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
