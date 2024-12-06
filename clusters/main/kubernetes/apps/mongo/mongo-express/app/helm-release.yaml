@@ -27,6 +27,13 @@ spec:
         keepHistory: false
     values:
         TZ: Europe/Madrid
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                ME_CONFIG_MONGODB_URL: ${MONGODB_ROOT_URL}
         ingress:
             main:
                 enabled: true
