@@ -10,3 +10,4 @@ resources:
   - pgadmin/ks.yaml
   - teamspeak3/ks.yaml
   - mongo
+  - external-apps
