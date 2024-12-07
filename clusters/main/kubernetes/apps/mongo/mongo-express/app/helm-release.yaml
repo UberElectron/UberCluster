@@ -5,6 +5,7 @@ metadata:
     namespace: mongodb
 spec:
     interval: 15m
+    enabled: false
     chart:
         spec:
             chart: mongo-express
