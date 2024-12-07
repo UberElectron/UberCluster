@@ -5,7 +5,6 @@ metadata:
     namespace: mongodb
 spec:
     interval: 15m
-    enabled: false
     chart:
         spec:
             chart: mongo-express
@@ -35,6 +34,8 @@ spec:
                         main:
                             env:
                                 ME_CONFIG_MONGODB_URL: ${MONGODB_ROOT_URL}
+                                ME_CONFIG_BASICAUTH_USERNAME: ${MONGOEXPRESS_BASICAUTH_USER}
+                                ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOEXPRESS_BASICAUTH_PASS}
         ingress:
             main:
                 enabled: true
