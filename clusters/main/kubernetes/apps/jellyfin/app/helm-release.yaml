@@ -84,6 +84,13 @@ spec:
                 mountPath: /config/transcodes
                 readOnly: false
                 type: emptyDir
+            media:
+                enabled: true
+                path: /mnt/MainPool/Media
+                mountPath: /Media
+                readOnly: false
+                server: ${TRUENAS_IP}
+                type: nfs
         release_name: jellyfin
         resources: {}
         securityContext:
