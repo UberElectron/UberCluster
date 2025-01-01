@@ -76,6 +76,18 @@ spec:
                         enabled: true
                       src:
                         enabled: true
+            actual-data:
+                enabled: true
+                mountPath: /data
+                readOnly: false
+                volsync:
+                    - name: actual-data
+                      type: restic
+                      credentials: minio
+                      dest:
+                        enabled: false
+                      src:
+                        enabled: true
         release_name: actualserver
         addons:
             codeserver:
