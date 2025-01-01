@@ -11,3 +11,4 @@ resources:
   - teamspeak3/ks.yaml
   - mongo
   - external-apps
+  - watcharr/ks.yaml
