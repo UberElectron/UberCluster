@@ -56,7 +56,6 @@ spec:
                 enabled: true
                 mountPath: /data/server-files
                 readOnly: false
-                storageClass: ""
                 volsync:
                     - name: server-files 
                       type: restic
@@ -69,7 +68,6 @@ spec:
                 enabled: true
                 mountPath: /data/user-files
                 readOnly: false
-                storageClass: ""
                 volsync:
                     - name: user-files2 
                       type: restic
@@ -79,39 +77,3 @@ spec:
                       src:
                         enabled: true
         release_name: actualserver
-        resources: {}
-        securityContext:
-            container:
-                UMASK: "0022"
-                readOnlyRootFilesystem: false
-                runAsGroup: 0
-                runAsNonRoot: false
-                runAsUser: 0
-            pod:
-                fsGroupChangePolicy: OnRootMismatch
-        service:
-            main:
-                enabled: true
-                ports:
-                    main:
-                        port: 5006
-                        protocol: http
-                        targetPort: 5006
-                type: ClusterIP
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            probes:
-                                liveness:
-                                    path: /
-                                    type: http
-                                readiness:
-                                    path: /
-                                    type: http
-                                startup:
-                                    path: /
-                                    type: http
-                replicas: 1
-                type: Deployment
