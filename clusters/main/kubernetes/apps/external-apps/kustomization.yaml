@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - external-your-spotify/ks.yaml
   - external-forum/ks.yaml
+  - external-somnia-customers/ks.yaml
