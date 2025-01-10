@@ -33,7 +33,7 @@ spec:
                     enabled: true
                     revision: "3"
                     credentials: backblaze
-                    retentionPolicy: 12d
+                    retentionPolicy: "7d"
                 recovery:
                     enabled: true
                     revision: "2"
