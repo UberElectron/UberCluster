@@ -33,7 +33,7 @@ spec:
         broadcastProxyImage:
             pullPolicy: IfNotPresent
             repository: docker.io/alpine/socat
-            tag: 1.8.0.1@sha256:6af1075a99755da5cff063873d9c4c29f5007492ab58ae2873e0f59d4ca36bfa
+            tag: 1.8.0.1@sha256:8c84fe0a7823c341da6ba4fad192018067f939b71cb87bfe6ed9162b2d8e50df
         credentials:
             minio:
                 accessKey: ${S3_PVC_ACCESSKEY}
