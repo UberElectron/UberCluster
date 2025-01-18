@@ -63,7 +63,7 @@ spec:
                       dest:
                         enabled: true
                       src:
-                        enabled: false
+                        enabled: true
             user-files:
                 enabled: true
                 mountPath: /data/user-files
@@ -75,7 +75,7 @@ spec:
                       dest:
                         enabled: true
                       src:
-                        enabled: false
+                        enabled: true
             data:
                 enabled: true
                 mountPath: /data
