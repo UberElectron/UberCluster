@@ -85,7 +85,7 @@ spec:
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                        enabled: false
                       src:
-                        enabled: true
+                        enabled: false
         release_name: actualserver
