@@ -52,16 +52,40 @@ spec:
                         entrypoints:
                             - websecure
         persistence:
+            server-files:
+                enabled: true
+                mountPath: /data/server-files
+                readOnly: false
+                volsync:
+                    - name: server-files
+                      type: restic
+                      credentials: minio
+                      dest:
+                        enabled: true
+                      src:
+                        enabled: false
+            user-files:
+                enabled: true
+                mountPath: /data/user-files
+                readOnly: false
+                volsync:
+                    - name: user-files2
+                      type: restic
+                      credentials: minio
+                      dest:
+                        enabled: true
+                      src:
+                        enabled: false
             data:
                 enabled: true
                 mountPath: /data
                 readOnly: false
                 volsync:
-                    - name: actual-data
+                    - name: data
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                        enabled: false
                       src:
                         enabled: true
         release_name: actualserver
