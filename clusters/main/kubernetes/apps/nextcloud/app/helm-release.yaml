@@ -93,23 +93,6 @@ spec:
                         entrypoints:
                             - websecure
                 required: true
-            collabora:
-                enabled: true
-                hosts:
-                    - host: nextcloud.uberelectronnetwork.cc
-                      paths:
-                        - path: /collabora/
-                          pathType: Prefix
-                integrations:
-                    certManager:
-                        certificateIssuer: cloudflare-cert
-                        enabled: true
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
-                required: true
         metrics:
             main:
                 enabled: false
@@ -119,14 +102,9 @@ spec:
                 file_max_size: -1
                 infected_action: only_log
             collabora:
-                dictionaries:
-                    - en_GB
-                    - en_US
-                    - es_ES
                 enabled: true
-                interface_mode: default
-                password: ADDSYMBOL{NEXTCLOUD_COLLABORA_ADMIN_PASS}
                 username: ${NEXTCLOUD_COLLABORA_ADMIN_USER}
+                password: ${NEXTCLOUD_COLLABORA_ADMIN_PASS}
             credentials:
                 initialAdminPassword: ${NEXTCLOUD_ADMIN_PASS}
                 initialAdminUser: ${NEXTCLOUD_ADMIN_USER}
@@ -137,10 +115,7 @@ spec:
             files:
                 shared_folder_name: Shared
             general:
-                accessIP: 192.168.5.6
                 default_phone_region: ES
-                force_enable_allow_local_remote_servers: false
-                run_optimize: true
             notify_push:
                 enabled: true
             php:
@@ -191,10 +166,3 @@ spec:
                       src:
                         enabled: true
         release_name: nextcloud
-        securityContext:
-            container:
-                UMASK: "0022"
-                runAsGroup: 568
-                runAsUser: 568
-            pod:
-                fsGroupChangePolicy: OnRootMismatch
