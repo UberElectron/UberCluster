@@ -93,6 +93,23 @@ spec:
                         entrypoints:
                             - websecure
                 required: true
+            collabora:
+                enabled: true
+                hosts:
+                    - host: nextcloud.uberelectronnetwork.cc
+                      paths:
+                        - path: /collabora/
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare-cert
+                        enabled: true
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+                required: true
         metrics:
             main:
                 enabled: false
