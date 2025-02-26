@@ -31,12 +31,12 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: "3"
-                    credentials: backblaze
+                    revision: "4"
+                    credentials: minioCNPG
                     retentionPolicy: "7d"
                 recovery:
                     enabled: true
-                    revision: "2"
+                    revision: "3"
                     credentials: backblaze
                     method: object_store
                 cluster:
@@ -73,6 +73,15 @@ spec:
                 secretKey: ${S3_PVC_SECRETKEY}
                 type: s3
                 url: ${S3_PVC_URL}
+            minioCNPG:
+                name: minioCNPG
+                url: ${S3_CNPG_MINIO_URL}
+                bucket: ${S3_CNPG_MINIO_BUCKET}
+                encrKey: ${S3_CNPG_MINIO_ENCRYPTKEY}
+                path: ""
+                accessKey: ${S3_CNPG_MINIO_ACCESSKEY}
+                secretKey: ${S3_CNPG_MINIO_SECRETKEY}
+                type: s3
         ingress:
             main:
                 enabled: true
