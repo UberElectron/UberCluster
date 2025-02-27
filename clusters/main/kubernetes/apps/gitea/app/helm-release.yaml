@@ -48,6 +48,7 @@ spec:
                     instances: 2
                     singleNode: true
                 database: gitea
+                user: gitea
                 enabled: true
                 hibernate: false
                 mode: recovery
@@ -56,9 +57,6 @@ spec:
                     enablePodMonitor: true
                 password: PLACEHOLDERPASSWORD
                 pgVersion: 15
-                pooler:
-                    enabled: false
-                user: gitea
         config:
             ALLOWED_HOST_LIST: 127.0.0.1
             APP_NAME: Gitea
@@ -129,19 +127,6 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
-        ldap:
-            enabled: false
-        memcached:
-            enabled: true
-        metrics:
-            main:
-                enabled: true
-                endpoints:
-                    - path: /metrics
-                      port: main
-                type: servicemonitor
-        oauth:
-            enabled: false
         persistence:
             data:
                 enabled: true
@@ -157,29 +142,8 @@ spec:
                           enabled: true
                       src:
                           enabled: true
-            varlib:
-                enabled: true
-                mountPath: /var/lib/gitea
-                type: emptyDir
         release_name: gitea
-        resources: {}
-        securityContext:
-            container:
-                UMASK: "0022"
-                fsGroup: 1000
-                runAsGroup: 1000
-                runAsUser: 1000
-            fsGroup: 1000
-            pod:
-                fsGroupChangePolicy: OnRootMismatch
         service:
-            main:
-                enabled: true
-                ports:
-                    main:
-                        port: 10037
-                        targetPort: 3000
-                type: ClusterIP
             ssh:
                 enabled: true
                 loadBalancerIP: ${GITEA_SSH_IP}
@@ -189,45 +153,3 @@ spec:
                         port: 2222
                         targetPort: 2222
                 type: LoadBalancer
-        signing:
-            enabled: true
-            gpgHome: /data/git/.gnupg
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            envFrom:
-                                - configMapRef:
-                                      name: gitea-env
-                            probes:
-                                liveness:
-                                    type: tcp
-                                readiness:
-                                    type: tcp
-                                startup:
-                                    type: tcp
-                    initContainers:
-                        1-init-directories:
-                            command:
-                                - /usr/sbin/init_directory_structure.sh
-                            enabled: true
-                            envFrom:
-                                - configMapRef:
-                                      name: gitea-env
-                            imageSelector: image
-                            securityContext:
-                                runAsNonRoot: false
-                                runAsUser: 0
-                            type: init
-                        2-configure-gitea:
-                            command:
-                                - /usr/sbin/configure_gitea.sh
-                            enabled: true
-                            envFrom:
-                                - configMapRef:
-                                      name: gitea-env
-                            imageSelector: image
-                            type: init
-                replicas: 1
-                type: Deployment
