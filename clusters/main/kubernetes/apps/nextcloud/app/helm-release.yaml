@@ -51,7 +51,7 @@ spec:
                 monitoring:
                     disableDefaultQueries: false
                     enablePodMonitor: true
-                password: ${NEXTCLOUD_CNPG_PASSWORD}
+                password: C9grZXZSDDQkY39o71Ass6muNq6YqN0n7isCqzbY9cww5Cy4YfZSOtyCCpswcR
                 pgVersion: 15
         credentials:
             backblaze:
