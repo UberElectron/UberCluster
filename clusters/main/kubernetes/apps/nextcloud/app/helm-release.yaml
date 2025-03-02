@@ -32,29 +32,27 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: "3"
-                    credentials: backblaze
+                    revision: "4"
+                    credentials: minioCNPG
                     retentionPolicy: "14d"
                 recovery:
                     enabled: true
-                    revision: "2"
+                    revision: "3"
                     credentials: backblaze
                     method: object_store
                 cluster:
                     instances: 2
                     singleNode: true
                 database: nextcloud
+                user: nextcloud
                 enabled: true
                 hibernate: false
                 mode: recovery
                 monitoring:
                     disableDefaultQueries: false
                     enablePodMonitor: true
-                password: C9grZXZSDDQkY39o71Ass6muNq6YqN0n7isCqzbY9cww5Cy4YfZSOtyCCpswcR
+                password: ${NEXTCLOUD_CNPG_PASSWORD}
                 pgVersion: 15
-                pooler:
-                    enabled: false
-                user: nextcloud
         credentials:
             backblaze:
                 accessKey: ${S3_BACKBLAZE_ACCESSKEY}
@@ -74,6 +72,15 @@ spec:
                 secretKey: ${S3_PVC_SECRETKEY}
                 type: s3
                 url: ${S3_PVC_URL}
+            minioCNPG:
+                name: minioCNPG
+                url: ${S3_CNPG_MINIO_URL}
+                bucket: ${S3_CNPG_MINIO_BUCKET}
+                encrKey: ${S3_CNPG_MINIO_ENCRYPTKEY}
+                path: ""
+                accessKey: ${S3_CNPG_MINIO_ACCESSKEY}
+                secretKey: ${S3_CNPG_MINIO_SECRETKEY}
+                type: s3
         ingress:
             main:
                 enabled: true
