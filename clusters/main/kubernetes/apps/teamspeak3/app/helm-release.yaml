@@ -62,20 +62,9 @@ spec:
                           enabled: true
                       src:
                           enabled: true
-        securityContext:
-            container:
-                readOnlyRootFilesystem: false
         service:
-            files:
-                enabled: true
-                loadBalancerIP: ${TS3_IP}
-                ports:
-                    files:
-                        enabled: true
-                        port: 30033
-                        targetPort: 30033
-                type: LoadBalancer
             main:
+                primary: true
                 enabled: true
                 loadBalancerIP: ${TS3_IP}
                 ports:
@@ -102,17 +91,12 @@ spec:
                         protocol: udp
                         targetPort: 9987
                 type: LoadBalancer
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            env:
-                                TS3SERVER_LICENSE: accept
-                            probes:
-                                liveness:
-                                    type: tcp
-                                readiness:
-                                    type: tcp
-                                startup:
-                                    type: tcp
+            files:
+                enabled: true
+                loadBalancerIP: ${TS3_IP}
+                ports:
+                    files:
+                        enabled: true
+                        port: 30033
+                        targetPort: 30033
+                type: LoadBalancer
