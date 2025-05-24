@@ -85,15 +85,15 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: internal
                 hosts:
                     - host: ldap-server.uberelectronnetwork.cc
                 integrations:
                     certManager:
-                        certificateIssuer: cloudflare-cert
                         enabled: true
                     traefik:
+                        enabled: false
                         allowCors: false
-                        enabled: true
                         entrypoints:
                             - websecure
         persistence:

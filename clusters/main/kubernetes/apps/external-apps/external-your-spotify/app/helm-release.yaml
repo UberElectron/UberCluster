@@ -39,14 +39,14 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: internal
                 hosts:
                     - host: spotifystats.uberelectronnetwork.cc
                 integrations:
                     certManager:
-                        certificateIssuer: cloudflare-cert
                         enabled: true
                     traefik:
+                        enabled: false
                         allowCors: false
-                        enabled: true
                         entrypoints:
                             - websecure

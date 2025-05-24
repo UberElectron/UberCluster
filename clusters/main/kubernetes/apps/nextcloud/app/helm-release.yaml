@@ -84,6 +84,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: nextcloud.uberelectronnetwork.cc
                       paths:
@@ -92,11 +93,10 @@ spec:
                       # Paths readded for error on "nextcloud.ingressInjector" fixed on https://github.com/truecharts/public/pull/25447
                 integrations:
                     certManager:
-                        certificateIssuer: cloudflare-cert
                         enabled: true
                     traefik:
+                        enabled: false
                         allowCors: false
-                        enabled: true
                         entrypoints:
                             - websecure
                 required: true
