@@ -123,7 +123,7 @@ spec:
             files:
                 shared_folder_name: Shared
             general:
-                accessIP: ${TRAEFIK_IP}
+                accessIP: ${NGINX_EXTERNAL_IP}
                 default_phone_region: ES
             notify_push:
                 enabled: true
