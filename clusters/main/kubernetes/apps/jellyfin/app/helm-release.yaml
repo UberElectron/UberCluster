@@ -28,12 +28,6 @@ spec:
         keepHistory: false
     values:
         TZ: Europe/Madrid
-        autodiscovery:
-            enabled: false
-        broadcastProxyImage:
-            pullPolicy: IfNotPresent
-            repository: docker.io/alpine/socat
-            tag: 1.8.0.3@sha256:58568aae07b188c5bde84561840184f7e6131f12da33d91766a08a7ccc29907b
         credentials:
             minio:
                 accessKey: ${S3_PVC_ACCESSKEY}
@@ -60,31 +54,19 @@ spec:
                         entrypoints:
                             - websecure
         persistence:
-            cache:
-                enabled: true
-                mountPath: /cache
-                type: emptyDir
             config:
                 enabled: true
                 mountPath: /config
                 readOnly: false
                 storageClass: ""
                 volsync:
-                    - name: app 
+                    - name: app
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                          enabled: true
                       src:
-                        enabled: true
-            transcode:
-                autoPermissions:
-                    enabled: false
-                enabled: true
-                medium: ""
-                mountPath: /config/transcodes
-                readOnly: false
-                type: emptyDir
+                          enabled: true
             media:
                 enabled: true
                 path: /mnt/MainPool/Media
@@ -92,77 +74,8 @@ spec:
                 readOnly: false
                 server: ${TRUENAS_IP}
                 type: nfs
+
+        # -- enable Jellyfin autodiscovery on LAN
+        autodiscovery:
+            enabled: false
         release_name: jellyfin
-        resources: {}
-        securityContext:
-            container:
-                UMASK: "0022"
-                readOnlyRootFilesystem: false
-                runAsGroup: 568
-                runAsUser: 568
-            pod:
-                fsGroupChangePolicy: OnRootMismatch
-        service:
-            autodiscovery:
-                enabled: true
-                ports:
-                    autodiscovery:
-                        enabled: true
-                        port: 7359
-                        protocol: udp
-                        targetPort: 7359
-            main:
-                enabled: true
-                loadBalancerIP: ""
-                ports:
-                    main:
-                        port: 8096
-                        targetPort: 8096
-                type: LoadBalancer
-        updated: true
-        workload:
-            broadcastproxy:
-                enabled: false
-                podSpec:
-                    containers:
-                        broadcastproxy:
-                            args:
-                                - -c
-                                - export TARGET_IP=$(getent hosts '{{ printf "%v-autodiscovery" (include "tc.v1.common.lib.chart.names.fullname" $) }}' | awk '{ print $1 }') && [[ ! -z $TARGET_IP ]] && touch /tmp/healthy && socat UDP4-LISTEN:7359,fork,reuseaddr,rcvbuf=8096 UDP4-SENDTO:${TARGET_IP}:7359,rcvbuf=8096 ; rm -rf /tmp/healthy
-                            command:
-                                - /bin/sh
-                            enabled: true
-                            imageSelector: broadcastProxyImage
-                            primary: true
-                            probes:
-                                liveness:
-                                    command:
-                                        - cat
-                                        - /tmp/healthy
-                                    enabled: true
-                                    type: exec
-                                readiness:
-                                    command:
-                                        - cat
-                                        - /tmp/healthy
-                                    enabled: true
-                                    type: exec
-                                startup:
-                                    command:
-                                        - cat
-                                        - /tmp/healthy
-                                    enabled: true
-                                    type: exec
-                            securityContext:
-                                readOnlyRootFilesystem: true
-                    hostNetwork: true
-                    terminationGracePeriodSeconds: 3
-                type: DaemonSet
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            env:
-                                JELLYFIN_PublishedServerUrl: '{{ $.Values.chartContext.appUrl }}'
-                replicas: 1
-                type: Deployment
