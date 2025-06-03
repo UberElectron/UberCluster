@@ -50,9 +50,6 @@ spec:
                         certificateIssuer: domain-0-le-prod
                     traefik:
                         enabled: false
-                        allowCors: false
-                        entrypoints:
-                            - websecure
         persistence:
             config:
                 enabled: true
