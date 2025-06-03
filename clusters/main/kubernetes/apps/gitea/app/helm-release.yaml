@@ -123,11 +123,6 @@ spec:
                     certManager:
                         enabled: true
                         certificateIssuer: domain-0-le-prod
-                    traefik:
-                        enabled: false
-                        allowCors: false
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 enabled: true
