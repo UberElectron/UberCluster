@@ -41,7 +41,7 @@ spec:
                 enabled: true
                 ingressClassName: internal
                 hosts:
-                    - host: somniacustomers.uberelectronnetwork.cc
+                    - host: somniacustomers.${DOMAIN_0}
                 integrations:
                     certManager:
                         enabled: true

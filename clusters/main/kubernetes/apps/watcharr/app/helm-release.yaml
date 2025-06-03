@@ -44,7 +44,7 @@ spec:
                 enabled: true
                 ingressClassName: internal
                 hosts:
-                    - host: watcharr.uberelectronnetwork.cc
+                    - host: watcharr.${DOMAIN_0}
                 integrations:
                     certManager:
                         enabled: true

@@ -41,7 +41,7 @@ spec:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: forotropa.uberelectronnetwork.cc
+                    - host: forotropa.${DOMAIN_0}
                 integrations:
                     certManager:
                         enabled: true

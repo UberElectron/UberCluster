@@ -111,14 +111,14 @@ spec:
               name: mailer
             - keys:
                   - name: SSH_DOMAIN
-                    value: "giteassh.uberelectronnetwork.cc"
+                    value: "giteassh.${DOMAIN_0}"
               name: server
         ingress:
             main:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: gitea.uberelectronnetwork.cc
+                    - host: gitea.${DOMAIN_0}
                 integrations:
                     certManager:
                         enabled: true

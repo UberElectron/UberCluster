@@ -86,7 +86,7 @@ spec:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: nextcloud.uberelectronnetwork.cc
+                    - host: nextcloud.${DOMAIN_0}
                       paths:
                         - path: /
                           pathType: Prefix

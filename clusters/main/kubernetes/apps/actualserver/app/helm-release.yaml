@@ -42,7 +42,7 @@ spec:
                 enabled: true
                 ingressClassName: internal
                 hosts:
-                    - host: actual.uberelectronnetwork.cc
+                    - host: actual.${DOMAIN_0}
                 integrations:
                     certManager:
                         enabled: true
