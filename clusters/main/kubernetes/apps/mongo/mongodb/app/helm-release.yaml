@@ -58,6 +58,9 @@ spec:
                     main:
                         port: 27017
                         targetPort: 27017
+                integrations:
+                    metallb:
+                        enabled: true
         mongodbUsername: "test"
         mongodbDatabase: "test"
         password: ${MONGODB_PASS}

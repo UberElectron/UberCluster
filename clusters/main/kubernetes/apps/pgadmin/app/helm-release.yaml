@@ -71,12 +71,15 @@ spec:
         service:
             main:
                 enabled: true
+                type: LoadBalancer
                 loadBalancerIP: ""
                 ports:
                     main:
                         port: 10024
                         targetPort: 80
-                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
         workload:
             main:
                 podSpec:

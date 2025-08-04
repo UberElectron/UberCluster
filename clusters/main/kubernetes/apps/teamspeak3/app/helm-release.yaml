@@ -65,6 +65,7 @@ spec:
         service:
             main:
                 enabled: true
+                type: LoadBalancer
                 loadBalancerIP: ${TS3_IP}
                 ports:
                     main:
@@ -83,4 +84,6 @@ spec:
                         enabled: true
                         port: 30033
                         targetPort: 30033
-                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true

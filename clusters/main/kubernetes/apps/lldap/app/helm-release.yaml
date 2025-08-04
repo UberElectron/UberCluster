@@ -31,13 +31,13 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: "4"
+                    revision: "5"
                     credentials: minioCNPG
                     retentionPolicy: "7d"
                 recovery:
                     enabled: true
-                    revision: "3"
-                    credentials: backblaze
+                    revision: "4"
+                    credentials: minioCNPG
                     method: object_store
                 cluster:
                     instances: 2
@@ -121,19 +121,25 @@ spec:
         service:
             ldap:
                 enabled: true
+                type: LoadBalancer
                 loadBalancerIP: ""
                 ports:
                     ldap:
                         enabled: true
                         port: 3890
-                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
             main:
                 enabled: true
+                type: LoadBalancer
                 loadBalancerIP: ""
                 ports:
                     main:
                         port: 17170
-                type: LoadBalancer
+                integrations:
+                    metallb:
+                        enabled: true
         workload:
             main:
                 podSpec:

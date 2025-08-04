@@ -32,13 +32,13 @@ spec:
             main:
                 backups:
                     enabled: true
-                    revision: "4"
+                    revision: "5"
                     credentials: minioCNPG
                     retentionPolicy: "14d"
                 recovery:
                     enabled: true
-                    revision: "3"
-                    credentials: backblaze
+                    revision: "4"
+                    credentials: minioCNPG
                     method: object_store
                 cluster:
                     instances: 2
