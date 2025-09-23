@@ -69,6 +69,7 @@ spec:
       # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console only
       type: ""
 
+    # UberCluster - DNS entry for S3 URL.
     customDNS:
       customTTL: 1h
       filterUnmappedTypes: true
