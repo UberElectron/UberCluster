@@ -28,6 +28,8 @@ spec:
         keepHistory: false
     values:
         TZ: Europe/Madrid
+        podOptions:
+            hostUsers: true
         cnpg:
             main:
                 backups:
