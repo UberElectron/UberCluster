@@ -28,6 +28,8 @@ spec:
         keepHistory: false
     values:
         TZ: Europe/Madrid
+        podOptions:
+            hostUsers: true
         admin:
             email: ${GITEA_ADMIN_EMAIL}
             password: ${GITEA_ADMIN_PASS}
