@@ -30,6 +30,10 @@ spec:
         TZ: Europe/Madrid
         podOptions:
             hostUsers: true
+        # --  memcached dependency settings
+        memcached:
+            podOptions:
+                hostUsers: true
         admin:
             email: ${GITEA_ADMIN_EMAIL}
             password: ${GITEA_ADMIN_PASS}
