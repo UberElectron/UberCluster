@@ -160,8 +160,3 @@ spec:
                         enabled: true
                         port: 2222
                         targetPort: 2222
-        workload:
-            main:
-                podSpec:
-                    podOptions:
-                        hostUsers: true
