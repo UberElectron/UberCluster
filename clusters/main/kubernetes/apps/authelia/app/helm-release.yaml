@@ -117,7 +117,7 @@ spec:
                     sender: "Authelia <no-reply@${DOMAIN_0}>"
                     tls:
                         server_name: ${GITEA_MAILER_SMTP_ADDR}
-                        skip_verify: false
+                        skip_verify: true
             access_control:
                 default_policy: "deny"
                 rules:
