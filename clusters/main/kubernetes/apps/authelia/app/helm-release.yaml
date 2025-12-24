@@ -97,13 +97,27 @@ spec:
                 # lldap setup
                 # https://github.com/lldap/lldap/blob/main/example_configs/authelia_config.yml
                 ldap:
-                implementation: lldap
-                address: ldap://${LLDAP_IP}:3890
-                base_dn: ${LDAP_BASEDN}
-                user: uid=${AUTHELIA_LDAP_USERID},ou=people,${LDAP_BASEDN}
-                # user with lldap_password_manager group
-                # above user password in plain text
-                password: ${AUTHELIA_LDAP_PASSWORD}
+                    implementation: lldap
+                    address: ldap://${LLDAP_IP}:3890
+                    base_dn: ${LDAP_BASEDN}
+                    user: uid=${AUTHELIA_LDAP_USERID},ou=people,${LDAP_BASEDN}
+                    # user with lldap_password_manager group
+                    # above user password in plain text
+                    password: ${AUTHELIA_LDAP_PASSWORD}
+            notifier:
+                # smtp setup
+                smtp:
+                    address: smtp://${GITEA_MAILER_SMTP_ADDR}:${GITEA_MAILER_SMTP_PORT}
+                    # gmail email address (username)
+                    username: ${GITEA_MAILER_USER}
+                    # use a google app password if using gmail
+                    password: ${GITEA_MAILER_PASSWD}
+                    # email address to show as sender
+                    sender: no-reply@auth.${DOMAIN_0}
+                    tls:
+                        server_name: ${GITEA_MAILER_SMTP_ADDR}
+                        minimum_version: TLS1.2
+                        skip_verify: false
             access_control:
                 default_policy: "deny"
                 rules:
