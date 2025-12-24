@@ -84,6 +84,13 @@ spec:
                           enabled: true
                       src:
                           enabled: false
+            secrets:
+                enabled: true
+                type: secret
+                objectName: authelia-oidc-secret
+                expandObjectName: false
+                mountPath: /config/secret
+                readOnly: true
         release_name: authelia
         workload:
             main:
@@ -137,3 +144,44 @@ spec:
                       subject: "group:admin"
             log:
                 level: "debug"
+            identity_providers:
+                oidc:
+                    ## The other portions of the mandatory OpenID Connect 1.0 configuration go here.
+                    ## See: https://www.authelia.com/c/oidc
+                    hmac_secret: '{{ secret "/config/secret/hmac_secret" }}'
+                    jwks:
+                        - key: |
+                              {{ secret "/config/secret/jwks_key.pem" | mindent 10 "|" | msquote }}
+                    ## Client configurations
+                    authorization_policies:
+                        actual:
+                            default_policy: "deny"
+                            rules:
+                                - policy: "one_factor"
+                                  subject: "group:user_actual"
+                                - policy: "two_factor"
+                                  subject: "group:user_2fa"
+                                - policy: "one_factor"
+                                  subject: "group:admin"
+                    clients:
+                        - client_id: '{{ secret "/config/secret/clients_actualserver_client_id" }}'
+                          client_name: "Actual-Budget"
+                          client_secret: '{{ secret "/config/secret/clients_actualserver_client_secret" }}'
+                          public: false
+                          authorization_policy: "actual"
+                          require_pkce: false
+                          pkce_challenge_method: ""
+                          redirect_uris:
+                              - "https://actual.${DOMAIN_0}/openid/callback"
+                          scopes:
+                              - "openid"
+                              - "profile"
+                              - "groups"
+                              - "email"
+                          response_types:
+                              - "code"
+                          grant_types:
+                              - "authorization_code"
+                          access_token_signed_response_alg: "none"
+                          userinfo_signed_response_alg: "none"
+                          token_endpoint_auth_method: "client_secret_basic"
