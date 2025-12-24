@@ -7,3 +7,5 @@ resources:
   - external-somnia-customers/ks.yaml
   - external-karakeep/ks.yaml
   - external-stirling/ks.yaml
+  - external-lldap-web/ks.yaml
+  - external-shinobi/ks.yaml

@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: external-shinobi
+    namespace: external-app
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: external-service
+            version: 16.14.3
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: external-shinobi
+    maxHistory: 3
+    install:
+        createNamespace: true
+        remediation:
+            retries: 3
+    upgrade:
+        cleanupOnFail: true
+        remediation:
+            retries: 3
+    uninstall:
+        keepHistory: false
+    values:
+        service:
+            main:
+                type: ExternalIP
+                externalIP: ${SHINOBI_IP}
+                ports:
+                    main:
+                        protocol: http
+                        port: ${EXTERNALAPP_SHINOBI_PORT}
+                        # Target port is the port of the "external service"
+                        # Defaults to "port" if not set
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                hosts:
+                    - host: shinobi.${DOMAIN_0}
+                integrations:
+                    certManager:
+                        enabled: true
+                        certificateIssuer: domain-0-le-prod
+                    traefik:
+                        enabled: false
