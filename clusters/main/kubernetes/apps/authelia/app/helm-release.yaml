@@ -50,15 +50,13 @@ spec:
             main:
                 enabled: true
                 hibernate: false
-                mode: recovery
+                #mode: recovery
                 cluster:
                     singleNode: true
                 backups:
-                    enabled: true
                     credentials: minioCNPG
                     retentionPolicy: "14d"
                 recovery:
-                    enabled: true
                     credentials: minioCNPG
                     method: object_store
         ingress:
@@ -85,7 +83,7 @@ spec:
                       dest:
                           enabled: true
                       src:
-                          enabled: true
+                          enabled: false
         release_name: authelia
 
         # All configuration options should be put under this. Supports all upstream options
