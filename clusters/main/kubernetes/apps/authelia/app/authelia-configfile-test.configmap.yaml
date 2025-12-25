@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authelia-configfile-test
+  namespace: authelia
+data:
+  configuration.yaml: |
+    session:
+      # Be sure to change this to your domain. You can also define multiple domains
+      cookies:
+        - domain: ${DOMAIN_0}
+          authelia_url: https://auth.${DOMAIN_0}
+    authentication_backend:
+      # lldap setup
+      # https://github.com/lldap/lldap/blob/main/example_configs/authelia.md
+      ldap:
+        implementation: lldap
+        address: "ldap://${LLDAP_IP}:3890"
+        base_dn: ${LDAP_BASEDN}
+        user: uid=${AUTHELIA_LDAP_USERID},ou=people,${LDAP_BASEDN}
+        # user with lldap_password_manager group
+        # above user password in plain text
+        password: ${AUTHELIA_LDAP_PASSWORD}
+    notifier:
+      # smtp setup
+      smtp:
+        address: "submissions://${SMTP_ADDR}:465"
+        username: ${SMTP_USER}
+        password: "${SMTP_PASSWD}"
+        # email address to show as sender
+        sender: "Authelia <no-reply@${DOMAIN_0}>"
+        tls:
+          server_name: ${SMTP_ADDR}
+          skip_verify: false
+    access_control:
+      default_policy: "deny"
+      rules:
+        # basic rule for one factor (username/password) login for users in the admin group
+        - domain:
+            - "*.${DOMAIN_0}"
+            - ${DOMAIN_0}
+          policy: one_factor
+          subject: "group:admin"
+    log:
+      level: "debug"
+    identity_providers:
+      oidc:
+        ## The other portions of the mandatory OpenID Connect 1.0 configuration go here.
+        ## See: https://www.authelia.com/c/oidc
+        hmac_secret: {{ secret "/config/secret/hmac_secret" }}
+        jwks:
+          - key: {{ secret "/config/secret/jwks_key.pem" | mindent 10 "|" | msquote }}
+        ## Client configurations
+        authorization_policies:
+          actual:
+            default_policy: "deny"
+            rules:
+              - policy: "one_factor"
+                subject: "group:user_actual"
+              - policy: "two_factor"
+                subject: "group:user_2fa"
+              - policy: "one_factor"
+                subject: "group:admin"
+        clients:
+          - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
+            client_name: "Actual-Budget"
+            client_secret: {{ secret "/config/secret/clients_actualserver_client_secret" }}
+            public: false
+            authorization_policy: "actual"
+            require_pkce: false
+            pkce_challenge_method: ""
+            redirect_uris:
+              - "https://actual.${DOMAIN_0}/openid/callback"
+            scopes:
+              - "openid"
+              - "profile"
+              - "groups"
+              - "email"
+            response_types:
+              - "code"
+            grant_types:
+              - "authorization_code"
+            access_token_signed_response_alg: "none"
+            userinfo_signed_response_alg: "none"
+            token_endpoint_auth_method: "client_secret_basic"
