@@ -60,15 +60,19 @@ spec:
               enabled: true
             src:
               enabled: true
-      data:
-        volsync:
-          - name: data
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
+      # data:
+      #   volsync:
+      #     - name: data
+      #       type: restic
+      #       credentials: minio
+      #       dest:
+      #         enabled: true
+      #       src:
+      #         enabled: true
+      # Create tmp data migrate pvc so "/data" can be safely deleted.
+      data_migrate:
+        enabled: true
+        mountPath: "/data-migrate"
       media:
         enabled: true
         path: /mnt/MainPool/Media
