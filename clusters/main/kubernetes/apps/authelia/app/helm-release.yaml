@@ -91,6 +91,14 @@ spec:
                 expandObjectName: false
                 mountPath: /config/secret
                 readOnly: true
+            testconfig:
+                enabled: true
+                type: configmap
+                objectName: authelia-configfile  
+                expandObjectName: false
+                mountPath: /config-test.yaml
+                subPath: config-test.yaml
+                readOnly: true
         release_name: authelia
         workload:
             main:
