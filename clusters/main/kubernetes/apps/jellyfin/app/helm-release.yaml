@@ -60,7 +60,6 @@ spec:
               enabled: true
             src:
               enabled: true
-      # Recreate "/data" with volsync enabled
       data:
         volsync:
           - name: data
@@ -70,10 +69,6 @@ spec:
               enabled: true
             src:
               enabled: true
-      # Create tmp data migrate pvc so "/data" can be safely deleted.
-      data-migrate:
-        enabled: true
-        mountPath: "/data-migrate"
       media:
         enabled: true
         path: /mnt/MainPool/Media
@@ -81,14 +76,6 @@ spec:
         readOnly: false
         server: ${TRUENAS_IP}
         type: nfs
-
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              env:
-                JELLYFIN_DATA_DIR: "/data-migrate"
 
     # -- enable Jellyfin autodiscovery on LAN
     autodiscovery:
