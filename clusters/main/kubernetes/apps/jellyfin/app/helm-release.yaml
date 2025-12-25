@@ -68,17 +68,6 @@ spec:
                 server: ${TRUENAS_IP}
                 type: nfs
 
-        # Use old config directories for data migration (chart v22.x.x)
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            env:
-                                JELLYFIN_DATA_DIR: /config
-                                JELLYFIN_CONFIG_DIR: /config/config
-                                JELLYFIN_LOG_DIR: /config/log
-
         # -- enable Jellyfin autodiscovery on LAN
         autodiscovery:
             enabled: false
