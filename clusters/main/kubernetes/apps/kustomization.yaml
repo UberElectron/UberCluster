@@ -5,6 +5,7 @@ resources:
   - actualserver/ks.yaml
   - authelia/ks.yaml
   - gitea/ks.yaml
+  - homebox/ks.yaml
   - jellyfin/ks.yaml
   - nextcloud/ks.yaml
   - pgadmin/ks.yaml
