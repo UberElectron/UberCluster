@@ -149,9 +149,9 @@ spec:
                 oidc:
                     ## The other portions of the mandatory OpenID Connect 1.0 configuration go here.
                     ## See: https://www.authelia.com/c/oidc
-                    hmac_secret: {{ secret "/config/secret/hmac_secret" }}
-                    jwks:
-                        - key: {{ secret "/config/secrets/oidc/jwks/rsa.2048.key" | mindent 10 "|" | msquote }}
+                    hmac_secret: '{{ secret "/config/secret/hmac_secret" }}'
+                    # jwks:
+                    #     - key: '{{ secret "/config/secrets/oidc/jwks/rsa.2048.key" | mindent 10 "|" | msquote }}'
                     ## Client configurations
                     authorization_policies:
                         actual:
@@ -164,9 +164,9 @@ spec:
                                 - policy: "one_factor"
                                   subject: "group:admin"
                     clients:
-                        - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
+                        - client_id: '{{ secret "/config/secret/clients_actualserver_client_id" }}'
                           client_name: "Actual-Budget"
-                          client_secret: {{ secret "/config/secret/clients_actualserver_client_secret" }}
+                          client_secret: '{{ secret "/config/secret/clients_actualserver_client_secret" }}'
                           public: false
                           authorization_policy: "actual"
                           require_pkce: false
