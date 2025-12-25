@@ -60,17 +60,16 @@ spec:
               enabled: true
             src:
               enabled: true
-      # Disable "/data" so we can recreate it with volsync enabled.
+      # Recreate "/data" with volsync enabled
       data:
-        enabled: false
-      #   volsync:
-      #     - name: data
-      #       type: restic
-      #       credentials: minio
-      #       dest:
-      #         enabled: true
-      #       src:
-      #         enabled: true
+        volsync:
+          - name: data
+            type: restic
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
       # Create tmp data migrate pvc so "/data" can be safely deleted.
       data-migrate:
         enabled: true
