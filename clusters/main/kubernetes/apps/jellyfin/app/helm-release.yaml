@@ -70,7 +70,7 @@ spec:
       #       src:
       #         enabled: true
       # Create tmp data migrate pvc so "/data" can be safely deleted.
-      data_migrate:
+      data-migrate:
         enabled: true
         mountPath: "/data-migrate"
       media:
