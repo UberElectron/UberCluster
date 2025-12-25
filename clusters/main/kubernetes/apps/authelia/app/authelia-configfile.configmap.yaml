@@ -49,7 +49,7 @@ data:
         ## See: https://www.authelia.com/c/oidc
         hmac_secret: {{ secret "/config/secret/hmac_secret" }}
         jwks:
-          - key: {{ secret "/config/secrets/oidc/jwks/rsa.2048.key" | mindent 10 "|" | msquote }}
+          - key: {{ secret "/config/secret/jwks_key.pem" | mindent 10 "|" | msquote }}
         ## Client configurations
         authorization_policies:
           actual:
