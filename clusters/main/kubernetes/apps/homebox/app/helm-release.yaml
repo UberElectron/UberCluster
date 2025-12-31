@@ -74,7 +74,7 @@ spec:
               env:
                 # OIDC Config
                 HBOX_OIDC_ENABLED: true
-                HBOX_OIDC_ISSUER_URL: "https://auth.${DOMAIN_0}"
+                HBOX_OIDC_ISSUER_URL: "authelia.authelia.svc.cluster.local:9091"
                 HBOX_OIDC_CLIENT_ID: ${AUTHELIA_CLIENT_HOMEBOX_CLIENTID}
                 HBOX_OIDC_CLIENT_SECRET: ${AUTHELIA_CLIENT_HOMEBOX_SECRET}
                 HBOX_OPTIONS_TRUST_PROXY: true
