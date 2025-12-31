@@ -96,7 +96,12 @@ spec:
                         main:
                             env:
                                 # OIDC Config
-                                ACTUAL_OPENID_DISCOVERY_URL: http://authelia.authelia.svc.cluster.local:9091/.well-known/openid-configuration
+                                ACTUAL_OPENID_DISCOVERY_URL: https://auth.${DOMAIN_0}/.well-known/openid-configuration
                                 ACTUAL_OPENID_CLIENT_ID: ${AUTHELIA_CLIENT_ACTUALSERVER_CLIENTID}
                                 ACTUAL_OPENID_CLIENT_SECRET: ${AUTHELIA_CLIENT_ACTUALSERVER_SECRET}
                                 ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.${DOMAIN_0}
+                    # The pod need to resolver auth url so it can get "auth.domain.tld/.well-known/openid-configuration" values.
+                    hostAliases:
+                        - ip: ${NGINX_EXTERNAL_IP}
+                          hostnames:
+                            - "auth.${DOMAIN_0}"
