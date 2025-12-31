@@ -59,9 +59,9 @@ spec:
                       type: restic
                       credentials: minio
                       dest:
-                        enabled: true
+                          enabled: true
                       src:
-                        enabled: true
+                          enabled: true
             user-files:
                 enabled: true
                 mountPath: /data/user-files
@@ -87,3 +87,16 @@ spec:
                       src:
                         enabled: true
         release_name: actualserver
+
+        # Add extra Env variables not supported by Truecharts.
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                # OIDC Config
+                                ACTUAL_OPENID_DISCOVERY_URL: http://authelia.authelia.svc.cluster.local:9091/.well-known/openid-configuration
+                                ACTUAL_OPENID_CLIENT_ID: ${AUTHELIA_CLIENT_ACTUALSERVER_CLIENTID}
+                                ACTUAL_OPENID_CLIENT_SECRET: ${AUTHELIA_CLIENT_ACTUALSERVER_SECRET}
+                                ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.${DOMAIN_0}
