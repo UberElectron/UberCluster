@@ -50,10 +50,10 @@ spec:
             certificateIssuer: domain-0-le-prod
           nginx:
             enabled: true
-            auth:
-              type: "authelia"
-              internalHost: "authelia.authelia.svc.cluster.local:9091"
-              externalHost: "auth.${DOMAIN_0}"
+            # auth:
+            #   type: "authelia"
+            #   internalHost: "authelia.authelia.svc.cluster.local:9091"
+            #   externalHost: "auth.${DOMAIN_0}"
     persistence:
       data:
         volsync:
@@ -79,6 +79,7 @@ spec:
                 HBOX_OIDC_CLIENT_SECRET: ${AUTHELIA_CLIENT_HOMEBOX_SECRET}
                 HBOX_OPTIONS_TRUST_PROXY: true
                 HBOX_OIDC_BUTTON_TEXT: "Sign in with Authelia"
+          # The pod need to resolver auth url so it can get "auth.domain.tld/.well-known/openid-configuration" values.
           hostAliases:
             - ip: ${NGINX_EXTERNAL_IP}
               hostnames:
