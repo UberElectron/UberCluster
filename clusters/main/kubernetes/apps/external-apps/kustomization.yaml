@@ -9,3 +9,5 @@ resources:
   - external-stirling/ks.yaml
   - external-lldap-web/ks.yaml
   - external-shinobi/ks.yaml
+  - external-adventurelog-back/ks.yaml
+  - external-adventurelog-front/ks.yaml
