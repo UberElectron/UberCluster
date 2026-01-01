@@ -41,7 +41,7 @@ spec:
         enabled: true
         ingressClassName: external
         hosts:
-          - host: adventure-api-temp.${DOMAIN_0}
+          - host: adventure-api.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
