@@ -1,0 +1,113 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: immich
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: immich
+      version: 25.25.2
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: immich
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    TZ: Europe/Madrid
+    credentials:
+      minio:
+        accessKey: ${S3_PVC_ACCESSKEY}
+        bucket: backup
+        encrKey: ${S3_PVC_ENCRYPTKEY}
+        name: minio
+        path: ""
+        secretKey: ${S3_PVC_SECRETKEY}
+        type: s3
+        url: ${S3_PVC_URL}
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: immich.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+          traefik:
+            enabled: false
+
+    persistence:
+      library:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/library
+        readOnly: false
+      uploads:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/uploads
+        readOnly: false
+      backups:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/backups
+        readOnly: false
+      thumbs:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/thumbs
+        readOnly: false
+      profile:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/profile
+        readOnly: false
+      video:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/immich/encoded-video
+        readOnly: false
+      # Mount old photos Dataset.
+      photos:
+        enabled: true
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: /mnt/MainPool/ServerData/Photos
+        mountPath: /mnt/photos
+        readOnly: true
+        targetSelector:
+          main:
+            main: {}
+          microservices:
+            microservices: {}
+
+    cnpg:
+      main:
+        cluster:
+          singleNode: true
+        # mode: recovery   # Set to 'recovery' when recovery from S3, also change the revisions
+        backups:
+          enabled: false
+          credentials: minio
+          retentionPolicy: "14d"
+          # revision: "1"
+        recovery:
+          credentials: minio
+          # revision: ""
