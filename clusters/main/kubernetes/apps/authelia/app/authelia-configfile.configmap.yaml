@@ -80,6 +80,13 @@ data:
                 subject: "group:user_adventurelog"
               - policy: "two_factor"
                 subject: "group:admin"
+          immich:
+            default_policy: "deny"
+            rules:
+              - policy: "two_factor"
+                subject: "group:user_immich"
+              - policy: "two_factor"
+                subject: "group:admin"
         clients:
           - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
             client_name: "Actual-Budget"
@@ -152,3 +159,25 @@ data:
               - "email"
             response_types:
               - "code"
+          - client_id: {{ secret "/config/secret/clients_immich_client_id" }}
+            client_name: "Immich"
+            client_secret: {{ secret "/config/secret/clients_immich_client_secret" }}
+            public: false
+            authorization_policy: "immich"
+            require_pkce: false
+            pkce_challenge_method: ""
+            redirect_uris:
+              - "https://immich.${DOMAIN_0}/auth/login"
+              - "https://immich.${DOMAIN_0}/user-settings"
+              - "app.immich:///oauth-callback"
+            scopes:
+              - "openid"
+              - "profile"
+              - "email"
+            response_types:
+              - "code"
+            grant_types:
+              - 'authorization_code'
+            access_token_signed_response_alg: 'none'
+            userinfo_signed_response_alg: 'none'
+            token_endpoint_auth_method: 'client_secret_post'
