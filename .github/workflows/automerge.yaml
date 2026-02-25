@@ -1,5 +1,7 @@
 name: Automerge and Approve
 
+# This workflow will be disabled in Github.
+# "automerge_aproval" workflow will be used instead (with Renovate auto-merge for PRs).
 on:
   workflow_run:
     workflows: ["Placeholder"]  # Name of the main CI workflow

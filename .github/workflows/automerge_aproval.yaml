@@ -1,0 +1,52 @@
+name: Auto-approve Renovate PRs
+
+# Run when Renovate enables auto-merge for the PR
+on:
+  pull_request:
+    types: [auto_merge_enabled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  actions: read
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Only target safe updates from Renovate
+    if: >
+      github.event.pull_request.user.login == 'renovate[bot]' &&
+      (
+       startsWith(github.event.pull_request.title, 'fix(flux):') ||
+       startsWith(github.event.pull_request.title, 'feat(flux):')
+      ) && 
+      (
+       contains(github.event.pull_request.labels.*.name, 'type/patch') ||
+       contains(github.event.pull_request.labels.*.name, 'type/minor')
+      ) &&
+       !contains(github.event.pull_request.labels.*.name, 'system-upgrade')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Wait for CI checks to complete first
+      # - name: Wait for CI checks to complete
+      #   uses: lewagon/wait-on-check-action@v1.3.4
+      #   with:
+      #     ref: ${{ github.event.pull_request.head.sha }}
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     wait-interval: 30
+      #     running-workflow-name: "auto-approve"
+
+      # Approve PR
+      - name: Approve PR
+        # if: success()
+        run: |
+          # Approve the PR
+          gh pr review --approve ${{ github.event.pull_request.number }}
+          # Enable auto-merge
+          # gh pr merge --auto --merge ${{ github.event.pull_request.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
