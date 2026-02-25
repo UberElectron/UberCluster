@@ -32,17 +32,17 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       # Wait for CI checks to complete first
-      # - name: Wait for CI checks to complete
-      #   uses: lewagon/wait-on-check-action@v1.3.4
-      #   with:
-      #     ref: ${{ github.event.pull_request.head.sha }}
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     wait-interval: 30
-      #     running-workflow-name: "auto-approve"
+      - name: Wait for CI checks to complete
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 30
+          running-workflow-name: "auto-approve"
 
       # Approve PR
       - name: Approve PR
-        # if: success()
+        if: success()
         run: |
           # Approve the PR
           gh pr review --approve ${{ github.event.pull_request.number }}
