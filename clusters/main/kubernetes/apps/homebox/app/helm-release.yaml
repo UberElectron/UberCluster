@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: homebox
-      version: 10.4.0
+      version: 11.5.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -27,11 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # TMP - Manually update image to 0.26.1 in order to export data using new backup features.
-    image:
-      repository: ghcr.io/sysadminsmedia/homebox
-      pullPolicy: IfNotPresent
-      tag: 0.26.1@sha256:17d82459c12a6592b056d9319d3bc8dc46a2a0272062b433cd6ced4aa7155de7
     TZ: Europe/Madrid
     credentials:
       minio:
@@ -83,7 +78,6 @@ spec:
                 HBOX_OIDC_CLIENT_ID: ${AUTHELIA_CLIENT_HOMEBOX_CLIENTID}
                 HBOX_OIDC_CLIENT_SECRET: ${AUTHELIA_CLIENT_HOMEBOX_SECRET}
                 HBOX_OIDC_BUTTON_TEXT: "Sign in with Authelia"
-                HBOX_OPTIONS_TRUST_PROXY: true
                 HBOX_OPTIONS_ALLOW_LOCAL_LOGIN: false # Disable local login. Only allow login with OIDC.
 
                 # Required. Server-side secret HMAC-keyed into stored API key hashes; 
