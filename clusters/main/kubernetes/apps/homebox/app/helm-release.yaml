@@ -27,6 +27,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    # TMP - Manually update image to 0.26.1 in order to export data using new backup features.
+    image:
+      repository: ghcr.io/sysadminsmedia/homebox
+      pullPolicy: IfNotPresent
+      tag: 0.25.0@sha256:6506480a3dfadd2cc885fa97b32d11b0ee28ec58629fa34a76afdb4ac540c7fc
+      tag: 0.26.1@sha256:17d82459c12a6592b056d9319d3bc8dc46a2a0272062b433cd6ced4aa7155de7
     TZ: Europe/Madrid
     credentials:
       minio:
@@ -80,6 +86,12 @@ spec:
                 HBOX_OIDC_BUTTON_TEXT: "Sign in with Authelia"
                 HBOX_OPTIONS_TRUST_PROXY: true
                 HBOX_OPTIONS_ALLOW_LOCAL_LOGIN: false # Disable local login. Only allow login with OIDC.
+
+                # Required. Server-side secret HMAC-keyed into stored API key hashes; 
+                # the binary refuses to start if this is shorter than 32 bytes. 
+                # Generate with openssl rand -base64 48. 
+                # Must stay stable across restarts — rotating it invalidates every issued API key.
+                HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
           # The pod need to resolve auth url so it can get "auth.domain.tld/.well-known/openid-configuration" values.
           hostAliases:
             - ip: ${NGINX_EXTERNAL_IP}
