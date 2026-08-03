@@ -33,7 +33,7 @@ spec:
                 ports:
                     main:
                         protocol: http
-                        port: ${EXTERNALAPP_KARAKEEP_PORT}
+                        port: ${EXTERNALAPP_DAWARICH_PORT}
                         # Target port is the port of the "external service"
                         # Defaults to "port" if not set
         ingress:
