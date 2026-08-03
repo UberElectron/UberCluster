@@ -87,6 +87,13 @@ data:
                 subject: "group:user_immich"
               - policy: "two_factor"
                 subject: "group:admin"
+          dawarich:
+            default_policy: "deny"
+            rules:
+              - policy: "two_factor"
+                subject: "group:user_dawarich"
+              - policy: "two_factor"
+                subject: "group:admin"
         clients:
           - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
             client_name: "Actual-Budget"
@@ -181,3 +188,14 @@ data:
             access_token_signed_response_alg: 'none'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_post'
+          - client_id: {{ secret "/config/secret/clients_dawarich_client_id" }}
+            client_name: "Dawarich"
+            client_secret: {{ secret "/config/secret/clients_dawarich_client_secret" }}
+            public: false
+            authorization_policy: "dawarich"
+            redirect_uris:
+              - "https://dawarich.${DOMAIN_0}/users/auth/openid_connect/callback"
+            scopes:
+              - "openid"
+              - "profile"
+              - "email"
