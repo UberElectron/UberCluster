@@ -57,43 +57,43 @@ data:
             rules:
               - policy: "one_factor"
                 subject: "group:user_actual"
-              - policy: "one_factor"
-                subject: "group:admin"
+              - policy: "two_factor"
+                subject: "group:app_admin"
           nextcloud:
             default_policy: "deny"
             rules:
               - policy: "two_factor"
                 subject: "group:user_nextcloud"
               - policy: "two_factor"
-                subject: "group:admin"
+                subject: "group:app_admin"
           homebox:
             default_policy: "deny"
             rules:
               - policy: "one_factor"
                 subject: "group:user_homebox"
-              - policy: "one_factor"
-                subject: "group:admin"
+              - policy: "two_factor"
+                subject: "group:app_admin"
           adventurelog:
             default_policy: "deny"
             rules:
               - policy: "two_factor"
                 subject: "group:user_adventurelog"
               - policy: "two_factor"
-                subject: "group:admin"
+                subject: "group:app_admin"
           immich:
             default_policy: "deny"
             rules:
               - policy: "two_factor"
                 subject: "group:user_immich"
               - policy: "two_factor"
-                subject: "group:admin"
+                subject: "group:app_admin"
           dawarich:
             default_policy: "deny"
             rules:
               - policy: "two_factor"
                 subject: "group:user_dawarich"
               - policy: "two_factor"
-                subject: "group:admin"
+                subject: "group:app_admin"
         clients:
           - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
             client_name: "Actual-Budget"
