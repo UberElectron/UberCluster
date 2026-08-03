@@ -11,3 +11,4 @@ resources:
   - external-shinobi/ks.yaml
   - external-adventurelog-back/ks.yaml
   - external-adventurelog-front/ks.yaml
+  - external-dawarich/ks.yaml
