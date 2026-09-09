@@ -100,6 +100,8 @@ spec:
                                 ACTUAL_OPENID_CLIENT_ID: ${AUTHELIA_CLIENT_ACTUALSERVER_CLIENTID}
                                 ACTUAL_OPENID_CLIENT_SECRET: ${AUTHELIA_CLIENT_ACTUALSERVER_SECRET}
                                 ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.${DOMAIN_0}
+                                ACTUAL_OPENID_ENFORCE: true
+                                ACTUAL_USER_CREATION_MODE: login
                     # The pod need to resolver auth url so it can get "auth.domain.tld/.well-known/openid-configuration" values.
                     hostAliases:
                         - ip: ${NGINX_EXTERNAL_IP}
