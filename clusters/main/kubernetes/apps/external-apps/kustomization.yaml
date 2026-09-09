@@ -5,6 +5,7 @@ resources:
   - external-your-spotify/ks.yaml
   - external-forum/ks.yaml
   - external-somnia-customers/ks.yaml
+  - external-somnia-guestlog/ks.yaml
   - external-karakeep/ks.yaml
   - external-stirling/ks.yaml
   - external-lldap-web/ks.yaml
