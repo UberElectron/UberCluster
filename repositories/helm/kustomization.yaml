@@ -13,6 +13,5 @@ resources:
   - metallb.yaml
   - openebs.yaml
   - prometheus-community.yaml
-  - spegel.yaml
   - truecharts.yaml
 # more goes here!
