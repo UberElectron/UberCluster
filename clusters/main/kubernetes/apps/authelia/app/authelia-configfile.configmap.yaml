@@ -94,6 +94,13 @@ data:
                 subject: "group:user_dawarich"
               - policy: "two_factor"
                 subject: "group:app_admin"
+          airtrail:
+            default_policy: "deny"
+            rules:
+              - policy: "two_factor"
+                subject: "group:user_airtrail"
+              - policy: "two_factor"
+                subject: "group:app_admin"
         clients:
           - client_id: {{ secret "/config/secret/clients_actualserver_client_id" }}
             client_name: "Actual-Budget"
@@ -199,3 +206,20 @@ data:
               - "openid"
               - "profile"
               - "email"
+          - client_id: {{ secret "/config/secret/clients_airtrail_client_id" }}
+            client_name: "Airtrail"
+            client_secret: {{ secret "/config/secret/clients_airtrail_client_secret" }}
+            public: false
+            authorization_policy: "airtrail"
+            redirect_uris:
+              - "https://airtrail.${DOMAIN_0}/login"
+            scopes:
+              - "openid"
+              - "profile"
+              - "groups"
+              - "email"
+            response_types:
+              - "code"
+            grant_types:
+              - 'authorization_code'
+            token_endpoint_auth_method: "client_secret_post"
